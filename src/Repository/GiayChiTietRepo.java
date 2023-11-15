@@ -33,7 +33,7 @@ public class GiayChiTietRepo {
                 + "INNER JOIN GIAY ON GIAYCHITIET.ID_GIAY = GIAY.ID\n"
                 + "INNER JOIN KICHCO ON GIAYCHITIET.ID_KICHCO = KICHCO.ID\n"
                 + "INNER JOIN KIEUDANG ON GIAYCHITIET.ID_KIEUDANG = KIEUDANG.ID\n";
-              
+
         try {
             Connection con = DbConText.getConnection();
             Statement stm = con.createStatement();
@@ -45,7 +45,7 @@ public class GiayChiTietRepo {
                 DanhMuc danhmuc = new DanhMuc(rs.getString("ID_DANHMUC"), rs.getString(14));
                 MauSac mauSac = new MauSac(rs.getString("ID_MAUSAC"), rs.getString(18));
                 KichCo kichCo = new KichCo(rs.getString("ID_KICHCO"), rs.getInt("SIZE"));
-               
+
                 listGiay.add(new GiayChiTiet(rs.getString("ID"), giay, hang, kieuDang, danhmuc, mauSac, kichCo, rs.getString(8),
                         rs.getBigDecimal(9), rs.getInt(10), rs.getString(11), rs.getString(12)));
 
@@ -56,6 +56,36 @@ public class GiayChiTietRepo {
         return listGiay;
     }
 
-   
+    public Integer UpdateSo(String id_GIAYCT, int soLuong) {
+        try {
+            String sql = "update GIAYCHITIET set SOLUONG = ? WHERE ID = ?";
+            Connection con = DbConText.getConnection();
+            PreparedStatement pstm = con.prepareCall(sql);
+            pstm.setObject(1, soLuong);
+            pstm.setObject(2, id_GIAYCT);
+
+            return pstm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public String UpdateSoLuong(String id_GIAYCT, Integer soLuong) {
+        try {
+            String sql = "update HOADONCHITIET set SOLUONG = ? WHERE ID = ?";
+            Connection con = DbConText.getConnection();
+            PreparedStatement pstm = con.prepareCall(sql);
+            pstm.setObject(1, soLuong);
+            pstm.setObject(2, id_GIAYCT);
+
+            pstm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+
+    }
 
 }

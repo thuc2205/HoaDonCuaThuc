@@ -11,7 +11,7 @@ import java.util.Date;
  * @author Admin
  */
 public class NhanVien  {
-    private String id,name;
+    private String id,ma,name;
     private Boolean gioiTinh;
     private String sdt;
     private String diaChi;
@@ -21,8 +21,9 @@ public class NhanVien  {
     public NhanVien() {
     }
 
-    public NhanVien(String id, String name, Boolean gioiTinh, String sdt, String diaChi, Date ngaySinh, String matKhau, String vaiTro, String trangThai) {
+    public NhanVien(String id, String ma, String name, Boolean gioiTinh, String sdt, String diaChi, Date ngaySinh, String matKhau, String vaiTro, String trangThai) {
         this.id = id;
+        this.ma = ma;
         this.name = name;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
@@ -32,6 +33,8 @@ public class NhanVien  {
         this.vaiTro = vaiTro;
         this.trangThai = trangThai;
     }
+
+   
 
     public String getId() {
         return id;
@@ -104,6 +107,15 @@ public class NhanVien  {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
+
+    public String getMa() {
+        return ma;
+    }
+
+    public void setMa(String ma) {
+        this.ma = ma;
+    }
+    
      
             
     

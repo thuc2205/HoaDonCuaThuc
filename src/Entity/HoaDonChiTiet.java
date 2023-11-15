@@ -13,13 +13,25 @@ import java.math.BigDecimal;
 public class HoaDonChiTiet {
     private String id;
     private GiayChiTiet giayChiTiet;
-    private HoaDon hoaDon;
+    private String iDhoaDon;
     private BigDecimal gia;
     private int soLuong;
     private String trangThai;
 
     public HoaDonChiTiet() {
     }
+
+    public HoaDonChiTiet(String id, GiayChiTiet giayChiTiet, String iDhoaDon, BigDecimal gia, int soLuong, String trangThai) {
+        this.id = id;
+        this.giayChiTiet = giayChiTiet;
+        this.iDhoaDon = iDhoaDon;
+        this.gia = gia;
+        this.soLuong = soLuong;
+        this.trangThai = trangThai;
+    }
+
+    
+    
 
     public HoaDonChiTiet(String id, GiayChiTiet giayChiTiet, BigDecimal gia, int soLuong, String trangThai) {
         this.id = id;
@@ -29,15 +41,7 @@ public class HoaDonChiTiet {
         this.trangThai = trangThai;
     }
     
-    public HoaDonChiTiet(String id, GiayChiTiet giayChiTiet, HoaDon hoaDon, BigDecimal gia, int soLuong, String trangThai) {
-        this.id = id;
-        this.giayChiTiet = giayChiTiet;
-        this.hoaDon = hoaDon;
-        this.gia = gia;
-        this.soLuong = soLuong;
-        this.trangThai = trangThai;
-    }
-
+   
     public String getId() {
         return id;
     }
@@ -54,14 +58,15 @@ public class HoaDonChiTiet {
         this.giayChiTiet = giayChiTiet;
     }
 
-    public HoaDon getHoaDon() {
-        return hoaDon;
+    public String getiDhoaDon() {
+        return iDhoaDon;
     }
 
-    public void setHoaDon(HoaDon hoaDon) {
-        this.hoaDon = hoaDon;
+    public void setiDhoaDon(String iDhoaDon) {
+        this.iDhoaDon = iDhoaDon;
     }
 
+  
     public BigDecimal getGia() {
         return gia;
     }
