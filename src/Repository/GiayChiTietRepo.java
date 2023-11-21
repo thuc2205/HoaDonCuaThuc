@@ -34,9 +34,8 @@ public class GiayChiTietRepo {
                 + "INNER JOIN KICHCO ON GIAYCHITIET.ID_KICHCO = KICHCO.ID\n"
                 + "INNER JOIN KIEUDANG ON GIAYCHITIET.ID_KIEUDANG = KIEUDANG.ID\n";
 
-        try {
-            Connection con = DbConText.getConnection();
-            Statement stm = con.createStatement();
+        try (Connection con = DbConText.getConnection(); Statement stm = con.createStatement();) {
+
             ResultSet rs = stm.executeQuery(sql);
             while (rs.next()) {
                 Giay giay = new Giay(rs.getString("ID_GIAY"), rs.getString("MA_GIAY"), rs.getString(21));
@@ -60,7 +59,7 @@ public class GiayChiTietRepo {
         try {
             String sql = "update GIAYCHITIET set SOLUONG = ? WHERE ID = ?";
             Connection con = DbConText.getConnection();
-            PreparedStatement pstm = con.prepareCall(sql);
+            PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setObject(1, soLuong);
             pstm.setObject(2, id_GIAYCT);
 
@@ -71,13 +70,13 @@ public class GiayChiTietRepo {
         }
     }
 
-    public String UpdateSoLuong(String id_GIAYCT, Integer soLuong) {
+    public String UpdateSoLuong(String idHoaDonCt, Integer soLuong) {
         try {
             String sql = "update HOADONCHITIET set SOLUONG = ? WHERE ID = ?";
             Connection con = DbConText.getConnection();
-            PreparedStatement pstm = con.prepareCall(sql);
+            PreparedStatement pstm = con.prepareStatement(sql);
             pstm.setObject(1, soLuong);
-            pstm.setObject(2, id_GIAYCT);
+            pstm.setObject(2, idHoaDonCt);
 
             pstm.executeUpdate();
         } catch (Exception e) {

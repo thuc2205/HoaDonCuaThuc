@@ -10,21 +10,37 @@ package Entity;
  */
 public class KhachHang {
 
-    private String id, name;
+    private String id, ma,name;
     private Boolean gioiTinh;
     private String sdt;
     private String diaChi;
+    private String idTichDiem;
 
     public KhachHang() {
     }
 
-    public KhachHang(String id, String name, Boolean gioiTinh, String sdt, String diaChi) {
+    public KhachHang(String id, String ma, String name, Boolean gioiTinh, String sdt, String diaChi, String idTichDiem) {
         this.id = id;
+        this.ma = ma;
         this.name = name;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
         this.diaChi = diaChi;
+        this.idTichDiem = idTichDiem;
     }
+
+    public String getIdTichDiem() {
+        return idTichDiem;
+    }
+
+    public void setIdTichDiem(String idTichDiem) {
+        this.idTichDiem = idTichDiem;
+    }
+
+    
+    
+
+    
 
     public String getId() {
         return id;
@@ -64,6 +80,14 @@ public class KhachHang {
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
+    }
+
+    public String getMa() {
+        return ma;
+    }
+
+    public void setMa(String ma) {
+        this.ma = ma;
     }
      
     
