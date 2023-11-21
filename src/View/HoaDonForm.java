@@ -1255,25 +1255,22 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void btnSuDungDienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuDungDienMouseClicked
         if (!lblMaHoaDon.getText().isEmpty()) {
-            if (!lblErrKiemTraDiem.getText().equals("0")) {
-                if (!lblTongTien.getText().equals("0")) {
-                    lblKiemTraDiem.setForeground(java.awt.Color.RED);
-                    BigDecimal dungDien = new BigDecimal(lblKiemTraDiem.getText().trim());
-                    tinhVaThemTongTien(5).subtract(dungDien);
-                    lblTongTien.setText(tinhVaThemTongTien(5).subtract(dungDien).toString());
-                } else {
-                    lblErrKiemTraDiem.setText("không thể sử dụng");
-                }
+            if (!lblTongTien.getText().equals("0")) {
+                lblKiemTraDiem.setForeground(java.awt.Color.RED);
+                BigDecimal dungDien = new BigDecimal(lblKiemTraDiem.getText().trim());
+                BigDecimal result = tinhVaThemTongTien(5).subtract(dungDien);
+                lblTongTien.setText(result.toString());
             } else {
-                lblErrKiemTraDiem.setText("chưa Kiểm tra điểm");
+                lblErrKiemTraDiem.setText("không thể sử dụng");
             }
+
         } else {
             lblErrKiemTraDiem.setText("Chưa Có Hoá Đơn");
         }
     }//GEN-LAST:event_btnSuDungDienMouseClicked
 
     private void btnSuDungDienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuDungDienActionPerformed
-        
+
     }//GEN-LAST:event_btnSuDungDienActionPerformed
 
     /**
