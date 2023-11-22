@@ -16,7 +16,7 @@ public class DbConText {
 
     static String user = "sa";
     static String Pass = "123";
-    static String url = "jdbc:sqlserver://ADMIN\\SQLEXPRESS:1433;databaseName=Giay_123";
+    static String url = "jdbc:sqlserver://DESKTOP-NFKC4RP\\SQLEXPRESS:1433;databaseName=BanGiay99";
 
     static {
         try {

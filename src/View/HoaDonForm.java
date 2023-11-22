@@ -1124,29 +1124,34 @@ public class HoaDonForm extends javax.swing.JFrame {
             int code = JOptionPane.showOptionDialog(this, "BẠN MUỐN LÀM GÌ ?", "LỰA CHỌN", 0, messegertype, null, obtion, "Số Lượng");
             switch (code) {
                 case 0:
+                    String soLuongGioHangGoc = tblGioHangCho.getValueAt(i, 3).toString();
                     String soLuongNhap = JOptionPane.showInputDialog("Nhập Số Lượng");
 
                     try {
-                        if (soLuongNhap != null && !soLuongNhap.isEmpty()) {
-                            Integer soLuongNhapEpKieu = Integer.parseInt(soLuongNhap);
-                            String soLuongGioHangGoc = tblGioHangCho.getValueAt(i, 3).toString();
-                            if (soLuongNhapEpKieu >= 0) {
+                        if (Integer.parseInt(soLuongNhap) < Integer.parseInt(soLuongGioHangGoc)) {
+                            if (soLuongNhap != null && !soLuongNhap.isEmpty()) {
+                                Integer soLuongNhapEpKieu = Integer.parseInt(soLuongNhap);
 
-                                Integer soLuongCapNhatsp = Integer.parseInt(soLuongSanPham) + soLuongNhapEpKieu;
+                                if (soLuongNhapEpKieu >= 0) {
 
-                                if (gct.UpdateSo(h.getGiayChiTiet().getiD(), soLuongCapNhatsp) != null) {
-                                    Integer soLuongCapNhatGioHang = Integer.parseInt(soLuongGioHangGoc) - soLuongNhapEpKieu;
-                                    hdctrepo.updateSoLuong(soLuongCapNhatGioHang, h.getGiayChiTiet().getiD());
-                                    showDataGoHang(hoaDon.getId());
-                                    showDataSanPham();
-                                    BigDecimal tongtien = tinhVaThemTongTien(5);
+                                    Integer soLuongCapNhatsp = Integer.parseInt(soLuongSanPham) + soLuongNhapEpKieu;
 
+                                    if (gct.UpdateSo(h.getGiayChiTiet().getiD(), soLuongCapNhatsp) != null) {
+                                        Integer soLuongCapNhatGioHang = Integer.parseInt(soLuongGioHangGoc) - soLuongNhapEpKieu;
+                                        hdctrepo.updateSoLuong(soLuongCapNhatGioHang, h.getGiayChiTiet().getiD());
+                                        showDataGoHang(hoaDon.getId());
+                                        showDataSanPham();
+                                        BigDecimal tongtien = tinhVaThemTongTien(5);
+
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Số Lượng Phải Là Số Dương");
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(this, "Số Lượng Phải Là Số Dương");
+                                JOptionPane.showMessageDialog(this, "Vui lòng nhập Số Lượng");
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Vui lòng nhập Số Lượng");
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Số Lượng trong giỏ không đủ");
                         }
                     } catch (NumberFormatException e) {
                         JOptionPane.showMessageDialog(this, "Số Lượng Phải Là Số Nguyên");
