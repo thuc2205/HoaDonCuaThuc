@@ -72,10 +72,36 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     }
 
+    void showDataMaGiay() {
+        model.setRowCount(0);
+        listGiayChiTiet = gct.getAllGiay();
+        String comboMaGiay = (String) cboMa.getSelectedItem();
+        for (GiayChiTiet g : listGiayChiTiet) {
+            if(comboMaGiay.equalsIgnoreCase(g.getGiay().getMa())){
+            Vector<Object> v = new Vector<>();
+            v.add(g.getGiay().getMa());
+            v.add(g.getGiay().getName());
+            v.add(g.getHang().getName());
+            v.add(g.getMauSac().getName());
+            v.add(g.getKichCo().getSize());
+            v.add(g.getSoLuong());
+            v.add(g.getGia());
+            v.add(g.getSoLuong() > 0 ? "Còn Hàng" : "Hết Hàng");
+            model.addRow(v);
+            }else{
+                
+                
+            }
+
+        }
+
+    }
+
     void comBoMaGiay() {
         listGiayChiTiet = gct.getAllGiay();
         for (GiayChiTiet g : listGiayChiTiet) {
             cboMa.addItem(g.getGiay().getMa());
+            
         }
     }
 
@@ -319,6 +345,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         lblError.setForeground(new java.awt.Color(204, 0, 0));
 
         cboMa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả Mã Giày" }));
+        cboMa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1394,6 +1425,10 @@ public class HoaDonForm extends javax.swing.JFrame {
     private void btnTroVeBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeBanHangActionPerformed
         card.show(pnCardGoc, "CardMuaHang");
     }//GEN-LAST:event_btnTroVeBanHangActionPerformed
+
+    private void cboMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaActionPerformed
+       showDataMaGiay();
+    }//GEN-LAST:event_cboMaActionPerformed
 
     /**
      * @param args the command line arguments
