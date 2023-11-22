@@ -57,7 +57,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         listHoaDonChiTiet = hdctrepo.getAllHoaDon();
         listHoaDon = hdrepo.getAllHoaDon();
 
-        setTitle("Hoá Đơn");
         model = (DefaultTableModel) tblDanhSachSp.getModel();
         modelListGioHang = (DefaultTableModel) tblGioHangCho.getModel();
         modelListHoaDon = (DefaultTableModel) tblListHoaDon.getModel();
@@ -684,6 +683,8 @@ public class HoaDonForm extends javax.swing.JFrame {
             }
         });
 
+        lblNhanVien.setText("Chưa LÀm Rùi");
+
         lblTongTien.setText("0");
 
         lblTienThua.setText("0");
@@ -753,25 +754,33 @@ public class HoaDonForm extends javax.swing.JFrame {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(CardMuaHangLayout.createSequentialGroup()
                                 .addComponent(jLabel12)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblErrKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(CardMuaHangLayout.createSequentialGroup()
+                                            .addComponent(lblKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(btnTra))
+                                        .addComponent(lblNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSuDungDien)
+                                .addGap(30, 30, 30))))
                     .addGroup(CardMuaHangLayout.createSequentialGroup()
                         .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel5))
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel18))
-                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNhanVien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(168, 168, 168))
-                            .addGroup(CardMuaHangLayout.createSequentialGroup()
+                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(CardMuaHangLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel5))
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel18))
                                 .addGap(70, 70, 70)
                                 .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(choHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -780,32 +789,21 @@ public class HoaDonForm extends javax.swing.JFrame {
                                     .addGroup(CardMuaHangLayout.createSequentialGroup()
                                         .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(43, 43, 43)
-                                        .addComponent(lblErrTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
-                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblErrTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel1)
-                                .addGap(127, 127, 127))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
-                                .addGap(113, 113, 113)
-                                .addComponent(btnHoaDon)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHuy)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVaoDatHang, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
-                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addComponent(lblKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTra))
-                            .addComponent(lblErrKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSuDungDien)
-                        .addGap(30, 30, 30)))
+                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(CardMuaHangLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel1)
+                                        .addGap(127, 127, 127))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CardMuaHangLayout.createSequentialGroup()
+                                        .addGap(113, 113, 113)
+                                        .addComponent(btnHoaDon)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnHuy)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVaoDatHang, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -816,12 +814,13 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(CardMuaHangLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(CardMuaHangLayout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(lblNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
                     .addGroup(CardMuaHangLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -831,9 +830,9 @@ public class HoaDonForm extends javax.swing.JFrame {
                             .addComponent(btnVaoDatHang))
                         .addGap(23, 23, 23)
                         .addComponent(jLabel5)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(14, 14, 14)))
                 .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnTra)
@@ -1154,18 +1153,18 @@ public class HoaDonForm extends javax.swing.JFrame {
         int selectedRow = tblListHoaDon.getSelectedRow();
         lblError.setText(null);
         if (selectedRow != -1) {
-            if(tblGioHangCho.getRowCount()>=0){
-            lblMaHoaDon.setText((String) tblListHoaDon.getValueAt(selectedRow, 1));
+            if (tblGioHangCho.getRowCount() >= 0) {
+                lblMaHoaDon.setText((String) tblListHoaDon.getValueAt(selectedRow, 1));
 
-            listHoaDon = hdrepo.getAllHoaDon();
-            HoaDon h = listHoaDon.get(selectedRow);
+                listHoaDon = hdrepo.getAllHoaDon();
+                HoaDon h = listHoaDon.get(selectedRow);
 
-            String idHoaDon = h.getId().toString();
+                String idHoaDon = h.getId().toString();
 
-            showDataGoHang(idHoaDon);
-            BigDecimal tongtien = tinhVaThemTongTien(5);
-            lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
-            }else{
+                showDataGoHang(idHoaDon);
+                BigDecimal tongtien = tinhVaThemTongTien(5);
+                lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+            } else {
                 lblTongTien.setText("0");
             }
 
@@ -1312,7 +1311,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private void btnSuDungDienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuDungDienMouseClicked
         if (evt.getClickCount() == 2) {
             int check = JOptionPane.showConfirmDialog(this, "Hủy Sử Dụng Điểm");
-            if(check== JOptionPane.YES_OPTION){
+            if (check == JOptionPane.YES_OPTION) {
                 lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
                 BigDecimal result = tinhVaThemTongTien(5);
             }
@@ -1369,16 +1368,22 @@ public class HoaDonForm extends javax.swing.JFrame {
 
     private void txtTienKhachDuaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienKhachDuaKeyReleased
         String tienKhachDua = txtTienKhachDua.getText().trim();
-        BigDecimal tongTien = new BigDecimal(lblTongTien.getText().trim());
-        if (!tienKhachDua.equalsIgnoreCase("0") || !tongTien.equals("0")) {
-            
-            if (new BigDecimal(tienKhachDua).compareTo(tongTien) == 1 || new BigDecimal(tienKhachDua).compareTo(tongTien) == 0) {
-                BigDecimal tienthua = new BigDecimal(tienKhachDua).subtract(tongTien);
-                lblTienThua.setText(tienthua.toString());
-                lblErrTienKhachDua.setText(null);
-            }else{
-                lblErrTienKhachDua.setText("Chưa Đủ Tiền");
+        try {
+            BigDecimal tienKhachDuaDecimal = new BigDecimal(tienKhachDua);
+
+            BigDecimal tongTien = new BigDecimal(lblTongTien.getText().trim());
+            if (!tienKhachDua.equalsIgnoreCase("0") || !tongTien.equals("0")) {
+
+                if (tienKhachDuaDecimal.compareTo(tongTien) == 1 || tienKhachDuaDecimal.compareTo(tongTien) == 0) {
+                    BigDecimal tienthua = tienKhachDuaDecimal.subtract(tongTien);
+                    lblTienThua.setText(tienthua.toString());
+                    lblErrTienKhachDua.setText(null);
+                } else {
+                    lblErrTienKhachDua.setText("Chưa Đủ Tiền");
+                }
             }
+        } catch (NumberFormatException e) {
+            lblErrTienKhachDua.setText("Tiền Phải Là Số");
         }
     }//GEN-LAST:event_txtTienKhachDuaKeyReleased
 
