@@ -32,18 +32,15 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         modelLichSuHoaDon = (DefaultTableModel) tblLichSuHoaDon.getModel();
         modelLichSuMuaHang = (DefaultTableModel) tblLichSuDatHang.getModel();
         column();
-        column1();
+        
         showDaTAHoaDon();
     }
 
     void column() {
-        modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Ma HD", "NGAY TAO", "TONG TIEN", "TRANGTHAI"});
+        modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Ma HD","Mã NV", "NGAY TAO", "TONG TIEN","Tien Khach Dua","Thanh Toán", "TRANGTHAI"});
     }
 
-    void column1() {
-        modelLichSuMuaHang.setColumnIdentifiers(new String[]{"Ma HD", "NGAY TAO", "TENNGUOI NHAN", "SDT", "DIA CHI", "Phi SHip", "TONG TIEN", "TRANGTHAI"});
-    }
-
+   
     private void showDaTAHoaDon() {
         modelLichSuHoaDon.setRowCount(0);
 
@@ -56,8 +53,9 @@ public class LichSuHoaDon extends javax.swing.JFrame {
                 Vector<Object> rowData = new Vector<>();
                 rowData.add(modelLichSuHoaDon.getRowCount() + 1);
                 rowData.add(h.getMaHoaDon());
+                rowData.add(h.getNhanVien().getMa());                
                 rowData.add(h.getNgayTao());
-                rowData.add(h.getTongTien());
+                rowData.add(h.getTongTien());               
                 rowData.add(h.getTrangThai());
                 modelLichSuHoaDon.addRow(rowData);
             }

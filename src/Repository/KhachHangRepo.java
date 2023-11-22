@@ -55,7 +55,7 @@ public class KhachHangRepo {
     }
 
     public Integer congTichDiem(BigDecimal diem) {
-        String sql = "INSERT INTO TICHDIEN(DIEM) VALUES (?)";
+        String sql = "INSERT INTO TICHDIEN(ID_TICHDIEM,DIEM) VALUES (newid(),?)";
         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setBigDecimal(1, diem);
             return ps.executeUpdate();
@@ -83,7 +83,6 @@ public class KhachHangRepo {
                 ps.setObject(1, h.getName());
                 ps.setObject(2, h.getGioiTinh());
                 ps.setObject(3, h.getSdt());
-
                 ps.setObject(4, idTichDiem);
                 ps.executeUpdate();
             } else {

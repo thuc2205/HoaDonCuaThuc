@@ -22,7 +22,7 @@ import java.sql.*;
  * @author Admin
  */
 public class HoaDnRepo {
-    
+
     public List<HoaDon> getAllHoaDon() {
         List<HoaDon> listkd = new ArrayList<>();
         String sql = "SELECT "
@@ -43,7 +43,7 @@ public class HoaDnRepo {
                 + " LEFT JOIN KHACHHANG ON HOADON.ID_KHACHHANG = KHACHHANG.ID"
                 + " ORDER BY HOADON_MA DESC"; // Sắp xếp theo HOADON_ID tăng dần (ASC)
         try (Connection con = DbConText.getConnection(); Statement stm = con.createStatement();) {
-            
+
             ResultSet rs = stm.executeQuery(sql);
             while (rs.next()) {
                 NhanVien n = new NhanVien(rs.getString("NHANVIEN_ID"), rs.getString("NHANVIEN_MA"), rs.getString("NHANVIEN_TEN"), rs.getBoolean("NHANVIEN_GIOITINH"),
@@ -55,21 +55,21 @@ public class HoaDnRepo {
                 listkd.add(new HoaDon(rs.getString("HOADON_ID"), rs.getString("HOADON_MA"), n, k, rs.getDate("HOADON_NGAYTAO"),
                         rs.getString("HOADON_TEN_NGUOINHAN"), rs.getString("HOADON_SDT"), rs.getString("HOADON_DIACHI"),
                         rs.getBigDecimal("HOADON_PHISHIP"), rs.getBigDecimal("HOADON_TONGTIEN"), rs.getString("HOADON_TRANGTHAI")));
-                
+
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listkd;
     }
-    
+
     public HoaDon creatHoaDon(HoaDon h) {
         String sql = "INSERT INTO HOADON (ID,MA, ID_NHANVIEN, ID_KHACHHANG, TEN_NGUOINHAN, SDT, DIACHI, PHISHIP, TONGTIEN, TRANGTHAI)\n"
                 + "        VALUES (newid(),dbo.AUTO_MaHD(), NULL, NULL, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DbConText.getConnection();) {
             PreparedStatement pstm = con.prepareStatement(sql);
-            
+
             pstm.setObject(1, h.getTenNguoiNhan());
             pstm.setObject(2, h.getSdt());
             pstm.setObject(3, h.getDiaChi());
@@ -77,52 +77,52 @@ public class HoaDnRepo {
             pstm.setObject(5, h.getTongTien());
             pstm.setObject(6, h.getTrangThai());
             pstm.executeUpdate();
-            
+
         } catch (Exception e) {
             System.out.println("CREATE HOA DON BI LOI");
             e.printStackTrace();
-            
+
         }
         return h;
     }
-    
+
     public String selectMaHoaDon() {
         String sql = "SELECT TOP 1 * FROM HoaDon ORDER BY MA DESC";
-        
+
         try (Connection con = DbConText.getConnection(); Statement statement = con.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-            
+
             if (resultSet.next()) {
                 return resultSet.getString(2);
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SELECT MA HOA DON LỖI");
-            
+
         }
-        
+
         return null;
     }
-    
+
     public String selectiIdHoaDon() {
-        
+
         String sql = "SELECT TOP 1 * FROM HOADON ORDER BY MA DESC";
-        
+
         try (Connection con = DbConText.getConnection(); Statement statement = con.createStatement(); ResultSet resultSet = statement.executeQuery(sql)) {
-            
+
             if (resultSet.next()) {
                 resultSet.getString("ID");
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("LỖI SELECTID HOA DON");
-            
+
         }
         return null;
-        
+
     }
-    
+
     public String updateTrangThi(String trangThai, String idHoaDOn) {
         String sql = "update HOADON set TRANGTHAI =? where ID =? ";
         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
@@ -135,34 +135,34 @@ public class HoaDnRepo {
         }
         return null;
     }
-    
+
     public Integer selectIdSanPhamTrongGioHang(String idGiay, String idHoaDon) {
         String sql = "SELECT COUNT(*) AS SoLuong FROM HOADONCHITIET WHERE ID_GIAYCT = ? AND ID_HOADON = ?";
-        
+
         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, idGiay);
             ps.setString(2, idHoaDon);
-            
+
             ResultSet resultSet = ps.executeQuery();
-            
+
             if (resultSet.next()) {
                 int soLuong = resultSet.getInt("SoLuong");
                 return soLuong;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
         }
         return 0; // Trả về giá trị mặc định nếu không có kết quả hoặc có lỗi
     }
-    
+
     public String updateTrangThaiHoaDon(String trangThai, BigDecimal tongTien, String idHoaDon) {
         String sql = "UPDATE HOADON SET TRANGTHAI = ?, TONGTIEN = ? WHERE ID = ?";
         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, trangThai);
             ps.setBigDecimal(2, tongTien);
             ps.setString(3, idHoaDon);
-            
+
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 con.commit(); // Commit the changes if successful
@@ -180,7 +180,7 @@ public class HoaDnRepo {
         }
         return null;
     }
-    
+
     public List<String> selectAllTrangThaiHoaDon() {
         List<String> trangThaiList = new ArrayList<>();
         String sql = "SELECT TRANGTHAI FROM HOADON";
@@ -195,5 +195,5 @@ public class HoaDnRepo {
         }
         return trangThaiList;
     }
-    
+
 }

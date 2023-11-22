@@ -178,6 +178,8 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tìm Kiếm Mã");
 
+        btnFin.setBackground(new java.awt.Color(255, 255, 255));
+        btnFin.setForeground(new java.awt.Color(0, 0, 0));
         btnFin.setText("Tìm");
         btnFin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +187,8 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
             }
         });
 
+        btnDangKy.setBackground(new java.awt.Color(255, 255, 255));
+        btnDangKy.setForeground(new java.awt.Color(0, 0, 0));
         btnDangKy.setText("Đăng Ký");
         btnDangKy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,6 +196,8 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
             }
         });
 
+        btnSua.setBackground(new java.awt.Color(255, 255, 255));
+        btnSua.setForeground(new java.awt.Color(0, 0, 0));
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,6 +205,8 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
             }
         });
 
+        btnNew.setBackground(new java.awt.Color(255, 255, 255));
+        btnNew.setForeground(new java.awt.Color(0, 0, 0));
         btnNew.setText("New");
         btnNew.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -244,9 +252,9 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
                         .addComponent(btnSua)))
                 .addGap(21, 21, 21))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -278,9 +286,7 @@ public class DangKyThanhVienForm extends javax.swing.JFrame {
                             .addComponent(lblMaKhachHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTenKhachHang, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTimKiem)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6)))
+                    .addComponent(jLabel6))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
