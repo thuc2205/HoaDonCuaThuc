@@ -14,35 +14,38 @@ import java.util.logging.Logger;
  */
 public class DbConText {
 
-    static String user = "sa";
-    static String Pass = "123";
-    static String url = "jdbc:sqlserver://DESKTOP-NFKC4RP\\SQLEXPRESS:1433;databaseName=BanGiay99";
+    public static String Url = "jdbc:sqlserver://localhost:1433;databaseName=MeoMeo11;encrypt=true;trustServerCertificate=true;";
+    public static String Username = "sa";
+    public static String Pass = "123";
 
     static {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        } catch (Exception e) {
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Chưa cài JDBC!");
+            ex.printStackTrace();
+
         }
     }
 
-    public static Connection getConnection()  {
-        
-        Connection con=null;
+    public static Connection getConnection() {
+        Connection cn = null;
         try {
-            con = DriverManager.getConnection(url,user,Pass);
+            cn = DriverManager.getConnection(Url, Username, Pass);
         } catch (SQLException ex) {
-            Logger.getLogger(DbConText.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
-
-        return con;
+        return cn;
     }
+
     public static void main(String[] args) {
         Connection cn = getConnection();
-        if(cn!=null){
-            System.out.println("Thanh Cong");
+        if (cn != null) {
+            System.out.println("Connect DB is Successful!");
+        } else {
+            System.out.println("Connect DB is Fail!");
         }
     }
-
    
 
 }
