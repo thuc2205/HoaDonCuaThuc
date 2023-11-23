@@ -301,6 +301,7 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh Sách Sản Phẩm", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
+        tblDanhSachSp.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tblDanhSachSp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -377,6 +378,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
 
         tblGioHangCho.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tblGioHangCho.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tblGioHangCho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -444,6 +446,8 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa Đơn Chờ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 18))); // NOI18N
 
+        tblListHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        tblListHoaDon.setForeground(new java.awt.Color(51, 51, 51));
         tblListHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -459,9 +463,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         tblListHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblListHoaDonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tblListHoaDonMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(tblListHoaDon);
@@ -1167,10 +1168,6 @@ public class HoaDonForm extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_tblListHoaDonMouseClicked
-
-    private void tblListHoaDonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListHoaDonMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblListHoaDonMouseEntered
 
     private void tblGioHangChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangChoMouseClicked
         if (evt.getClickCount() == 2) {
