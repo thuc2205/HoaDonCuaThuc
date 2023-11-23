@@ -172,7 +172,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 Vector<Object> rowData = new Vector<>();
                 rowData.add(modelListHoaDon.getRowCount() + 1);
                 rowData.add(h.getMaHoaDon());
-                rowData.add(h.getNgayTao().getTime());
+                rowData.add(h.getNgayTao());
                 rowData.add(h.getNhanVien().getMa());
                 rowData.add(h.getTrangThai());
                 modelListHoaDon.addRow(rowData);
