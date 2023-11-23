@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import Repository.Account;
 import Repository.Validate;
 import Repository.JOPane;
+import View.HoaDonForm;
 
 public class SignIn_Dialog extends javax.swing.JDialog {
 
@@ -23,7 +24,7 @@ public class SignIn_Dialog extends javax.swing.JDialog {
         initComponents();
         rdoAdmin.setEnabled(false);
         setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("")));
+//        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("")));
         mouseEvent();
     }
 
@@ -213,7 +214,6 @@ public class SignIn_Dialog extends javax.swing.JDialog {
         });
 
         lblCloseSignIn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCloseSignIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Close_2.png"))); // NOI18N
         lblCloseSignIn.setPreferredSize(new java.awt.Dimension(38, 48));
         lblCloseSignIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,7 +288,8 @@ public class SignIn_Dialog extends javax.swing.JDialog {
     }//GEN-LAST:event_chkShowPasswordActionPerformed
 
     private void lblCloseSignInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseSignInMouseClicked
-        System.exit(0);
+       this.dispose();
+       System.out.println("Clicked Close SignIn");
     }//GEN-LAST:event_lblCloseSignInMouseClicked
 
     private void lblBtnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBtnLoginMouseClicked
@@ -323,20 +324,23 @@ public class SignIn_Dialog extends javax.swing.JDialog {
             JOPane.showErrorDialog(this, "Login failed! Check username,password or role !", "Error");
         } else {
             JOPane.showMessageDialog(this, "Login successfully!");
-//            new HoaDonForm().setVisible(true);
+            new HoaDonForm().setVisible(true);
             this.dispose();
+            System.out.println("Clicked Login");
         }
 
     }//GEN-LAST:event_lblBtnLoginMouseClicked
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
-        new SignUp_Dialog().setVisible(true);
+ 
         this.dispose();
+        System.out.println("Clicked SignUp");
     }//GEN-LAST:event_lblSignUpMouseClicked
 
     private void lblForgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblForgotPasswordMouseClicked
 //        new ForgotPass_Dialog().setVisible(true);
-//        this.dispose();
+        this.dispose();
+        System.out.println("Clicked Forgot Password");
     }//GEN-LAST:event_lblForgotPasswordMouseClicked
 
     private void txtUsernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyReleased
@@ -359,7 +363,7 @@ public class SignIn_Dialog extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Window".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
 

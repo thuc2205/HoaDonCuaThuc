@@ -16,7 +16,7 @@ import Repository.Account;
 import Repository.JOPane;
 import Repository.Validate;
 
-public class SignUp_Dialog extends javax.swing.JDialog {
+public final class SignUp_Dialog extends javax.swing.JDialog {
 
     private Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
     private Validate validate = new Validate();
@@ -25,7 +25,7 @@ public class SignUp_Dialog extends javax.swing.JDialog {
     public SignUp_Dialog() {
         initComponents();
         setLocationRelativeTo(null);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("")));
+//        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("")));
         mouseEvent();
     }
 
@@ -74,7 +74,6 @@ public class SignUp_Dialog extends javax.swing.JDialog {
         jLabel1.setText("Sign Up");
 
         lblCloseSignUp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCloseSignUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Close_2.png"))); // NOI18N
         lblCloseSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseSignUpMouseClicked(evt);
@@ -313,22 +312,25 @@ public class SignUp_Dialog extends javax.swing.JDialog {
 
     private void lblCloseSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseSignUpMouseClicked
         this.dispose();
-        new SignIn_Dialog().setVisible(true);
+        
+        System.out.println("Clicked Close SignUp");
     }//GEN-LAST:event_lblCloseSignUpMouseClicked
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
         signupClick();
+        System.out.println("Clicked SingUp");
     }//GEN-LAST:event_lblSignUpMouseClicked
 
     private void lblSignInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMouseClicked
-        new SignIn_Dialog().setVisible(true);
+      
         this.dispose();
+        System.out.println("Clicked SignIn");
     }//GEN-LAST:event_lblSignInMouseClicked
     public static void main(String args[]) {
 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Window".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -390,7 +392,7 @@ void mouseEvent() {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    label.setForeground(Color.WHITE);
+                    label.setForeground(Color.BLUE);
                 }
 
                 @Override
@@ -400,7 +402,7 @@ void mouseEvent() {
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    label.setForeground(getBackground());
+                    label.setForeground(Color.BLACK);
                 }
 
                 @Override
@@ -464,19 +466,19 @@ void mouseEvent() {
             JOPane.showMessageDialog(this, "Chooser gender");
             return null;
         }
-         //SĐT
+        //SĐT
         if (phone.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Phone is emty");
             txtPhone.requestFocus();
             return null;
         }
-         //Địa chỉ
+        //Địa chỉ
         if (address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Address is emty");
             txtAddress.requestFocus();
             return null;
         }
-         //Ngày sinh
+        //Ngày sinh
         if (birthday.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Birthday is emty");
             return null;
@@ -496,8 +498,8 @@ void mouseEvent() {
             txtPassword.requestFocus();
             return null;
         }
-       
-        NhanVien nv = new NhanVien(name,gender, phone, address, date, pass,  role);
+
+        NhanVien nv = new NhanVien(name, gender, phone, address, date, pass, role);
         return nv;
     }
 ////////////////////////////////////////////Lấy mã hiện tại ,fill mã tiếp theo lên form
