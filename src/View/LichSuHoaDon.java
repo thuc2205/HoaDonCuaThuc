@@ -97,7 +97,7 @@ public class LichSuHoaDon extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 51));
-        jLabel1.setText("LỊCH SỬ ĐẶT HÀNG");
+        jLabel1.setText("Hóa Đơn Chi Tiết");
 
         tblLichSuDatHang.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         tblLichSuDatHang.setModel(new javax.swing.table.DefaultTableModel(

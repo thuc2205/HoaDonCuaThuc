@@ -12,18 +12,21 @@ import java.util.Date;
  * @author Admin
  */
 public class HoaDon {
-    private String id,maHoaDon;
+
+    private String id, maHoaDon;
     private NhanVien nhanVien;
     private KhachHang khachHang;
     private Date ngayTao;
-    private String tenNguoiNhan,sdt,diaChi;
-    private BigDecimal phiShip,tongTien;
+    private String tenNguoiNhan, sdt, diaChi;
+    private BigDecimal phiShip, tongTien;
     private String trangThai;
+    private BigDecimal tienKhachDua, tienThua;
+    private String hinhThucThanhToan;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, String maHoaDon, NhanVien nhanVien, KhachHang khachHang, Date ngayTao, String tenNguoiNhan, String sdt, String diaChi, BigDecimal phiShip, BigDecimal tongTien, String trangThai) {
+    public HoaDon(String id, String maHoaDon, NhanVien nhanVien, KhachHang khachHang, Date ngayTao, String tenNguoiNhan, String sdt, String diaChi, BigDecimal phiShip, BigDecimal tongTien, String trangThai, BigDecimal tienKhachDua, BigDecimal tienThua, String hinhThucThanhToan) {
         this.id = id;
         this.maHoaDon = maHoaDon;
         this.nhanVien = nhanVien;
@@ -35,7 +38,36 @@ public class HoaDon {
         this.phiShip = phiShip;
         this.tongTien = tongTien;
         this.trangThai = trangThai;
+        this.tienKhachDua = tienKhachDua;
+        this.tienThua = tienThua;
+        this.hinhThucThanhToan = hinhThucThanhToan;
     }
+
+    public BigDecimal getTienKhachDua() {
+        return tienKhachDua;
+    }
+
+    public void setTienKhachDua(BigDecimal tienKhachDua) {
+        this.tienKhachDua = tienKhachDua;
+    }
+
+    public BigDecimal getTienThua() {
+        return tienThua;
+    }
+
+    public void setTienThua(BigDecimal tienThua) {
+        this.tienThua = tienThua;
+    }
+
+    public String getHinhThucThanhToan() {
+        return hinhThucThanhToan;
+    }
+
+    public void setHinhThucThanhToan(String hinhThucThanhToan) {
+        this.hinhThucThanhToan = hinhThucThanhToan;
+    }
+
+      
 
     public String getId() {
         return id;
@@ -124,6 +156,5 @@ public class HoaDon {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
-    
-    
+
 }

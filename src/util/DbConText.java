@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class DbConText {
 
-    public static String Url = "jdbc:sqlserver://localhost:1433;databaseName=MeoMeo11;encrypt=true;trustServerCertificate=true;";
+    public static String Url = "jdbc:sqlserver://DESKTOP-NFKC4RP\\SQLEXPRESS:1433;databaseName=BanGiay99";
     public static String Username = "sa";
     public static String Pass = "123";
 
