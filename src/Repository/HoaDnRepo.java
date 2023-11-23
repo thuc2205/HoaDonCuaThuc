@@ -1,12 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Repository;
 
 import Entity.HoaDon;
 import Entity.KhachHang;
-import Entity.KichCo;
 import Entity.NhanVien;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -134,6 +130,22 @@ public class HoaDnRepo {
             System.out.println("Lỗi UPDATE TRANG THAI");
         }
         return null;
+    }
+    public Integer updateHDByMa(String tt,BigDecimal tienKH,BigDecimal tienThua,String hinhThuc,String maHD){
+        String sql="update HOADON set TRANGTHAI = ?,TIENKHACHDUA=?,TIENTHUA=?,HINHTHUCTHANHTOAN=? where MA=?";
+         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setObject(1, tt);
+            ps.setObject(2, tienKH);
+            ps.setObject(3, tienThua);
+            ps.setObject(4, hinhThuc);
+            ps.setObject(5, maHD);
+            ps.executeUpdate();
+             return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Lỗi UPDATE HÓA ĐƠN");
+        }
+        return 1;
     }
 
     public Integer selectIdSanPhamTrongGioHang(String idGiay, String idHoaDon) {

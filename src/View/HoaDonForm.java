@@ -10,6 +10,7 @@ import Repository.HoaDonChiTietRepo;
 import Repository.KhachHangRepo;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -171,7 +172,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 Vector<Object> rowData = new Vector<>();
                 rowData.add(modelListHoaDon.getRowCount() + 1);
                 rowData.add(h.getMaHoaDon());
-                rowData.add(h.getNgayTao());
+                rowData.add(h.getNgayTao().getTime());
                 rowData.add(h.getNhanVien().getMa());
                 rowData.add(h.getTrangThai());
                 modelListHoaDon.addRow(rowData);
@@ -271,7 +272,7 @@ public class HoaDonForm extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         btnHuy = new javax.swing.JButton();
         btnHoaDon = new javax.swing.JButton();
-        choHinhThucTT = new javax.swing.JComboBox<>();
+        cboHinhThucTT = new javax.swing.JComboBox<>();
         lblMaHoaDon = new javax.swing.JLabel();
         lblNhanVien = new javax.swing.JLabel();
         lblTongTien = new javax.swing.JLabel();
@@ -678,10 +679,10 @@ public class HoaDonForm extends javax.swing.JFrame {
             }
         });
 
-        choHinhThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền Mặt", "Thẻ " }));
-        choHinhThucTT.addActionListener(new java.awt.event.ActionListener() {
+        cboHinhThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền Mặt", "Thẻ " }));
+        cboHinhThucTT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                choHinhThucTTActionPerformed(evt);
+                cboHinhThucTTActionPerformed(evt);
             }
         });
 
@@ -794,7 +795,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSuDungDien))
                             .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(choHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -849,7 +850,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                                 .addGap(10, 10, 10)
                                 .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(choHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(cboHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator1))
                         .addGap(18, 18, 18)
                         .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1123,7 +1124,17 @@ public class HoaDonForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-
+        BigDecimal tienKH = new BigDecimal(txtTienKhachDua.getText().trim());
+        BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
+        String trangThai = "Đã thanh toán";
+        String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
+        int ok = hdrepo.updateHDByMa(trangThai,tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(),maHD );
+        if(ok==0){
+            showDaTAHoaDon();
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
+        } else {
+             JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
+        }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblListHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListHoaDonMouseClicked
@@ -1224,9 +1235,9 @@ public class HoaDonForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblGioHangChoMouseEntered
 
-    private void choHinhThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choHinhThucTTActionPerformed
+    private void cboHinhThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHinhThucTTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_choHinhThucTTActionPerformed
+    }//GEN-LAST:event_cboHinhThucTTActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DangKyThanhVienForm t = new DangKyThanhVienForm();
@@ -1481,8 +1492,8 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JButton btnTroVeBanHang;
     private javax.swing.JButton btnVaoDatHang;
     private javax.swing.JPanel cardDatHang;
+    private javax.swing.JComboBox<String> cboHinhThucTT;
     private javax.swing.JComboBox<String> cboMa;
-    private javax.swing.JComboBox<String> choHinhThucTT;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
