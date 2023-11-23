@@ -1128,13 +1128,21 @@ public class HoaDonForm extends javax.swing.JFrame {
         BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
         String trangThai = "Đã thanh toán";
         String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
-        int ok = hdrepo.updateHDByMa(trangThai,tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(),maHD );
-        if(ok==0){
-            showDaTAHoaDon();
-            JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
-        } else {
-             JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
+        listKhachHang = khrp.getKhachHang();
+        for (KhachHang k : listKhachHang) {
+            if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
+                String idKH = k.getId();
+                int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), maHD, idKH);
+                if (ok == 0) {
+                    showDaTAHoaDon();
+                    JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
+                }
+            }
         }
+
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblListHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListHoaDonMouseClicked
@@ -1419,7 +1427,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cboMaActionPerformed
 
     private void txtMaKhachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaKhachKeyReleased
-         listKhachHang = khrp.getKhachHang();
+        listKhachHang = khrp.getKhachHang();
         for (KhachHang k : listKhachHang) {
             if (txtMaKhach.getText().equalsIgnoreCase(k.getMa())) {
                 lblKhachHang.setText(k.getName());

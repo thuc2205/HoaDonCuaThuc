@@ -131,14 +131,15 @@ public class HoaDnRepo {
         }
         return null;
     }
-    public Integer updateHDByMa(String tt,BigDecimal tienKH,BigDecimal tienThua,String hinhThuc,String maHD){
-        String sql="update HOADON set TRANGTHAI = ?,TIENKHACHDUA=?,TIENTHUA=?,HINHTHUCTHANHTOAN=? where MA=?";
+    public Integer updateHDByMa(String tt,BigDecimal tienKH,BigDecimal tienThua,String hinhThuc,String maHD,String KH){
+        String sql="update HOADON set TRANGTHAI = ?,TIENKHACHDUA=?,TIENTHUA=?,HINHTHUCTHANHTOAN=?,ID_KHACHHANG=?  where MA=?";
          try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, tt);
             ps.setObject(2, tienKH);
             ps.setObject(3, tienThua);
             ps.setObject(4, hinhThuc);
-            ps.setObject(5, maHD);
+            ps.setObject(5, KH);
+            ps.setObject(6, maHD);
             ps.executeUpdate();
              return 0;
         } catch (Exception e) {
