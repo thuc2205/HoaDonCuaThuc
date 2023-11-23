@@ -1,4 +1,4 @@
-package repository;
+package Repository;
 
 import Entity.NhanVien;
 import java.sql.Connection;

@@ -1,4 +1,4 @@
-package repository;
+package Repository;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;

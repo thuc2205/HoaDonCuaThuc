@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import Entity.NhanVien;
 import java.awt.Toolkit;
-import repository.Account;
-import repository.Validate;
-import repository.JOPane;
+import Repository.Account;
+import Repository.Validate;
+import Repository.JOPane;
 
 public class SignIn_Dialog extends javax.swing.JDialog {
 
