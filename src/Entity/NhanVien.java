@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Entity;
 
 import java.util.Date;
 
-/**
- *
- * @author Admin
- */
 public class NhanVien  {
     private String id,ma,name;
     private Boolean gioiTinh;
@@ -32,6 +25,16 @@ public class NhanVien  {
         this.matKhau = matKhau;
         this.vaiTro = vaiTro;
         this.trangThai = trangThai;
+    }
+
+    public NhanVien(String name, Boolean gioiTinh, String sdt, String diaChi, Date ngaySinh, String matKhau, String vaiTro) {
+        this.name = name;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
+        this.diaChi = diaChi;
+        this.ngaySinh = ngaySinh;
+        this.matKhau = matKhau;
+        this.vaiTro = vaiTro;
     }
 
    

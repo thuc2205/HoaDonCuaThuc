@@ -144,7 +144,7 @@ public class HoaDnRepo {
              return 0;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Lỗi UPDATE HÓA ĐƠN");
+            System.out.println("Lỗi UPDATE HÓA ĐƠN "+e.getMessage());
         }
         return 1;
     }

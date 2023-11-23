@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package util;
 
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Ba Thuc
- */
 public class DbConText {
 
     public static String Url = "jdbc:sqlserver://localhost:1433;databaseName=MeoMeo11;encrypt=true;trustServerCertificate=true;";

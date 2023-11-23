@@ -10,7 +10,6 @@ import Repository.HoaDonChiTietRepo;
 import Repository.KhachHangRepo;
 import java.awt.CardLayout;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +96,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         listGiayChiTiet = gct.getAllGiay();
         for (GiayChiTiet g : listGiayChiTiet) {
             cboMa.addItem(g.getGiay().getMa());
-
         }
     }
 
@@ -1016,7 +1014,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                                             if (hdctrepo.updateSoLuong(soLuongGiHangThayDoi, indexGiay.getiD()) != null) {
                                                 updateProductQuantity(indexDanhSachSp, soluongGioHang);// trừ số lượng ở sản phẩm                                   
                                                 showDataGoHang(idHoaDonz);
-                                                
+                                                showDataSanPham();
                                                 JOptionPane.showMessageDialog(this, "Thay Đổi Số Lượng ");
                                             }
 
@@ -1142,6 +1140,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 }
             }
         }
+        
 
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
