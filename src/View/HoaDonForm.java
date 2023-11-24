@@ -487,6 +487,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(0, 0, 0));
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Đặt Hàng");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
 
@@ -1123,25 +1128,31 @@ public class HoaDonForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        BigDecimal tienKH = new BigDecimal(txtTienKhachDua.getText().trim());
-        BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
-        String trangThai = "Đã thanh toán";
-        String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
-        listKhachHang = khrp.getKhachHang();
-        for (KhachHang k : listKhachHang) {
-            if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
-                String idKH = k.getId();
-                int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), maHD, idKH);
-                if (ok == 0) {
-                    showDaTAHoaDon();
-                    JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
+        int check = JOptionPane.showConfirmDialog(this, "Thanh Toán ?");
+        if (check == JOptionPane.YES_OPTION) {
+            BigDecimal tienKH = new BigDecimal(txtTienKhachDua.getText().trim());
+            BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
+            String trangThai = "Đã thanh toán";
+            String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
+            listKhachHang = khrp.getKhachHang();
+            for (KhachHang k : listKhachHang) {
+                if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
+                    String idKH = k.getId();
+                    int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), maHD, idKH);
+                    if (ok == 0) {
+                        showDaTAHoaDon();
+                        lblMaHoaDon.setText(null);
+                        txtTienKhachDua.setText("0");
+
+                        modelListGioHang.setRowCount(0);
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
+                    }
                 }
             }
         }
         
-
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
@@ -1444,6 +1455,10 @@ public class HoaDonForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txtMaKhachKeyReleased
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

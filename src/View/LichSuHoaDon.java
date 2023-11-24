@@ -52,7 +52,9 @@ public class LichSuHoaDon extends javax.swing.JFrame {
                 rowData.add(h.getMaHoaDon());
                 rowData.add(h.getNhanVien().getMa());                
                 rowData.add(h.getNgayTao());
-                rowData.add(h.getTongTien());               
+                 rowData.add(h.getTienKhachDua());
+                rowData.add(h.getTongTien());    
+                 rowData.add(h.getHinhThucThanhToan());
                 rowData.add(h.getTrangThai());
                 modelLichSuHoaDon.addRow(rowData);
             }
