@@ -218,6 +218,15 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
 
     }
+    void resetThanhToan(){
+        lblMaHoaDon.setText(null);
+                        txtTienKhachDua.setText("0");
+                        lblTongTien.setText("0");
+                        lblErrKiemTraDiem.setText("0");
+                        lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+                        modelListGioHang.setRowCount(0);
+                        lblTienThua.setText("0");
+    }
 
     private void updateProductQuantity(int i, int quantity) {
         int quantityInRow = Integer.parseInt(tblDanhSachSp.getValueAt(i, 5).toString());
@@ -1141,10 +1150,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                     int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), maHD, idKH);
                     if (ok == 0) {
                         showDaTAHoaDon();
-                        lblMaHoaDon.setText(null);
-                        txtTienKhachDua.setText("0");
-
-                        modelListGioHang.setRowCount(0);
+                        resetThanhToan();
                         JOptionPane.showMessageDialog(this, "Thanh toán thành công !");
                     } else {
                         JOptionPane.showMessageDialog(this, "Thanh toán thất bại !");
