@@ -8,12 +8,27 @@ import Repository.GiayChiTietRepo;
 import Repository.HoaDnRepo;
 import Repository.HoaDonChiTietRepo;
 import Repository.KhachHangRepo;
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,10 +38,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class HoaDonForm extends javax.swing.JFrame {
+public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     CardLayout card;
 
+    private Webcam webcam = null;
+    private WebcamPanel panel = null;
+    private Executor executor = Executors.newSingleThreadExecutor(this);
     HoaDonChiTietRepo hdctrepo = new HoaDonChiTietRepo();
     GiayChiTietRepo gct = new GiayChiTietRepo();
     HoaDnRepo hdrepo = new HoaDnRepo();
@@ -47,6 +65,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     public HoaDonForm() {
 
         initComponents();
+        initWebcam();
         card = (CardLayout) pnlBanHang.getLayout();
         card.show(pnlBanHang, "CardMuaHang");
         listGiayChiTiet = gct.getAllGiay();
@@ -66,6 +85,136 @@ public class HoaDonForm extends javax.swing.JFrame {
         showDaTAHoaDon();
         comBoMaGiay();
 
+    }
+
+    private void initWebcam() {
+
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0);
+        webcam.setViewSize(size);
+        panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+
+        jpnQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 223, 201));
+
+        executor.execute(this);
+    }
+
+    @Override
+    public void run() {
+        do {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+
+            }
+
+            Result result = null;
+            BufferedImage image = null;
+            if (webcam.open()) {
+                if ((image = webcam.getImage()) == null) {
+                    continue;
+                }
+            }
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            try {
+                result = new MultiFormatReader().decode(bitmap);
+            } catch (NotFoundException ex) {
+
+            }
+
+            if (result != null) {
+                int indexDanhSachSp = 0;
+                for (GiayChiTiet gct : listGiayChiTiet) {
+
+                    if (gct.getiD().equals(result.toString())) {
+                        indexDanhSachSp = listGiayChiTiet.indexOf(gct);
+                    }
+                }
+                int check = JOptionPane.showConfirmDialog(this, "Bỏ Vào Giỏ ! Mua");
+
+                listGiayChiTiet = gct.getAllGiay();
+                listHoaDon = hdrepo.getAllHoaDon();
+
+                if (check == JOptionPane.YES_OPTION) {
+                    if (!lblMaHoaDon.getText().isEmpty()) {
+                        if (indexDanhSachSp >= 0) {
+                            Integer soLuongGoc = Integer.valueOf(tblDanhSachSp.getValueAt(indexDanhSachSp, 5).toString());
+                            if (soLuongGoc >= 0) {
+
+                                String soLuong = JOptionPane.showInputDialog(null, "Nhập Số Lượng");
+                                try {
+                                    if (Integer.valueOf(soLuong) <= soLuongGoc) {
+
+                                        if (soLuong != null && !soLuong.isEmpty()) {
+                                            int selectedRow = tblListHoaDon.getSelectedRow();
+                                            HoaDon indexHoaDon = listHoaDon.get(selectedRow);//Lý Do
+                                            String idHoaDonz = indexHoaDon.getId();
+                                            GiayChiTiet indexGiay = listGiayChiTiet.get(indexDanhSachSp);
+                                            String donGia = tblDanhSachSp.getValueAt(indexDanhSachSp, 6).toString();
+                                            int soluongGioHang = Integer.parseInt(soLuong);
+                                            Integer soLuongGocGioHang = hdctrepo.selectSoLuongGioHangGoc(idHoaDonz, indexGiay.getiD());
+                                            Integer soLuongGiHangThayDoi = soluongGioHang + soLuongGocGioHang;
+                                            Integer idGiayCtTonTai = hdrepo.selectIdSanPhamTrongGioHang(indexGiay.getiD(), idHoaDonz);
+                                            if (selectedRow >= 0) {
+                                                if (idGiayCtTonTai == 0) {
+                                                    if (hdctrepo.creatGiHang(indexGiay.getiD(), idHoaDonz, new BigDecimal(donGia), soluongGioHang) != null) {
+                                                        updateProductQuantity(indexDanhSachSp, soluongGioHang);
+                                                        showDataSanPham();
+                                                        showDataGoHang(idHoaDonz);
+                                                        JOptionPane.showMessageDialog(this, "Bỏ Thành Công Vào Giỏ");
+                                                    }
+                                                } else {
+                                                    if (hdctrepo.updateSoLuong(soLuongGiHangThayDoi, indexGiay.getiD()) != null) {
+                                                        updateProductQuantity(indexDanhSachSp, soluongGioHang);// trừ số lượng ở sản phẩm                                   
+                                                        showDataGoHang(idHoaDonz);
+                                                        showDataSanPham();
+                                                        JOptionPane.showMessageDialog(this, "Thay Đổi Số Lượng ");
+                                                    }
+
+                                                }
+                                                showDataGoHang(idHoaDonz);
+                                                BigDecimal tongtien = tinhVaThemTongTien(5);
+
+                                            }
+
+                                        }
+
+                                    } else {
+                                        lblError.setText("Xin Lỗi ! Chúng Tôi Không Có Đủ Số Lượng ");
+
+                                        return;
+                                    }
+                                } catch (NumberFormatException e) {
+                                    JOptionPane.showMessageDialog(this, "Số Lượng không Đúng Định Dạng Số");
+                                }
+
+                            } else {
+
+                                lblError.setText("HẾT HÀNG");
+                                return;
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Chọn một sản phẩm trước khi thêm vào giỏ nha!!!^^");
+                        }
+                    } else {
+                        lblError.setText("Xin Lỗi ! Bạn Chưa Chọn Hoặc Tạo Hoá Đơn ");
+
+                        return;
+                    }
+                }
+            }
+        } while (true);
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread t = new Thread(r, "My Thread");
+        t.setDaemon(true);
+        return t;
     }
 
     void showDataMaGiay() {
@@ -218,14 +367,15 @@ public class HoaDonForm extends javax.swing.JFrame {
         }
 
     }
-    void resetThanhToan(){
+
+    void resetThanhToan() {
         lblMaHoaDon.setText(null);
-                        txtTienKhachDua.setText("0");
-                        lblTongTien.setText("0");
-                        lblErrKiemTraDiem.setText("0");
-                        lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
-                        modelListGioHang.setRowCount(0);
-                        lblTienThua.setText("0");
+        txtTienKhachDua.setText("0");
+        lblTongTien.setText("0");
+        lblErrKiemTraDiem.setText("0");
+        lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+        modelListGioHang.setRowCount(0);
+        lblTienThua.setText("0");
     }
 
     private void updateProductQuantity(int i, int quantity) {
@@ -242,7 +392,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         pnlDSSP = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhSachSp = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
         lblError = new javax.swing.JLabel();
         cboMa = new javax.swing.JComboBox<>();
         pnlGioHang = new javax.swing.JPanel();
@@ -250,7 +399,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblGioHangCho = new javax.swing.JTable();
         btnDeleteAll = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         pnlDSHD = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblListHoaDon = new javax.swing.JTable();
@@ -299,8 +447,8 @@ public class HoaDonForm extends javax.swing.JFrame {
         lblKhachHang = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         lblErrKhach = new javax.swing.JLabel();
-        pnlWebcam = new javax.swing.JPanel();
         jSeparator3 = new javax.swing.JSeparator();
+        jpnQR = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -330,8 +478,6 @@ public class HoaDonForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDanhSachSp);
 
-        jTextField1.setText("Tìm Kiếm ");
-
         lblError.setFont(new java.awt.Font("Serif", 1, 14)); // NOI18N
         lblError.setForeground(new java.awt.Color(204, 0, 0));
 
@@ -349,24 +495,16 @@ public class HoaDonForm extends javax.swing.JFrame {
             .addGroup(pnlDSSPLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDSSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(pnlDSSPLayout.createSequentialGroup()
-                        .addGroup(pnlDSSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDSSPLayout.createSequentialGroup()
-                                .addComponent(cboMa, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(186, 186, 186)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(cboMa, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblError, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         pnlDSSPLayout.setVerticalGroup(
             pnlDSSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDSSPLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlDSSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cboMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -418,10 +556,6 @@ public class HoaDonForm extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Quét Mã QR");
-
         javax.swing.GroupLayout pnlGioHangLayout = new javax.swing.GroupLayout(pnlGioHang);
         pnlGioHang.setLayout(pnlGioHangLayout);
         pnlGioHangLayout.setHorizontalGroup(
@@ -434,8 +568,6 @@ public class HoaDonForm extends javax.swing.JFrame {
                         .addComponent(btnDeleteAll)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDelete)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -447,8 +579,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(pnlGioHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete)
-                    .addComponent(btnDeleteAll)
-                    .addComponent(jButton5))
+                    .addComponent(btnDeleteAll))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -479,11 +610,11 @@ public class HoaDonForm extends javax.swing.JFrame {
         pnlDSHD.setLayout(pnlDSHDLayout);
         pnlDSHDLayout.setHorizontalGroup(
             pnlDSHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
         );
         pnlDSHDLayout.setVerticalGroup(
             pnlDSHDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
         );
 
         pnlBanHang.setLayout(new java.awt.CardLayout());
@@ -912,7 +1043,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                     .addComponent(txtMaKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlThanhVienLayout.setVerticalGroup(
             pnlThanhVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -928,18 +1059,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlWebcam.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Webcam", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
-
-        javax.swing.GroupLayout pnlWebcamLayout = new javax.swing.GroupLayout(pnlWebcam);
-        pnlWebcam.setLayout(pnlWebcamLayout);
-        pnlWebcamLayout.setHorizontalGroup(
-            pnlWebcamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlWebcamLayout.setVerticalGroup(
-            pnlWebcamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 59, Short.MAX_VALUE)
-        );
+        jpnQR.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -947,33 +1067,40 @@ public class HoaDonForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(pnlGioHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDSHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlDSSP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlDSSP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(pnlDSHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpnQR, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(pnlThanhVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlWebcam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnlBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 445, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pnlThanhVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlDSHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlDSHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jpnQR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlGioHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(pnlDSSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnlWebcam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(14, 14, 14)
                         .addComponent(pnlThanhVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(pnlBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jSeparator3)
@@ -1122,6 +1249,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                         lblTongTien.setText("0");
                         lblTongTien1.setText("0");
                         txtTienKhachDua.setText("0");
+                        lblError.setText(null);
                         showDataGoHang(idHoaDon);
                         selectmaHoaDon();
                         JOptionPane.showMessageDialog(this, "Tạo Hóa Đơn Thành Công");
@@ -1158,12 +1286,12 @@ public class HoaDonForm extends javax.swing.JFrame {
                 }
             }
         }
-        
+
 
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblListHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListHoaDonMouseClicked
-
+          
         int selectedRow = tblListHoaDon.getSelectedRow();
         lblError.setText(null);
         if (selectedRow != -1) {
@@ -1178,6 +1306,7 @@ public class HoaDonForm extends javax.swing.JFrame {
                 showDataGoHang(idHoaDon);
                 BigDecimal tongtien = tinhVaThemTongTien(5);
                 lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+                lblError.setText(null);
             } else {
                 lblTongTien.setText("0");
             }
@@ -1525,7 +1654,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboMa;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1548,7 +1676,7 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jpnQR;
     private javax.swing.JLabel lblErrKhach;
     private javax.swing.JLabel lblErrKiemTraDiem;
     private javax.swing.JLabel lblErrTienKhachDua;
@@ -1565,7 +1693,6 @@ public class HoaDonForm extends javax.swing.JFrame {
     private javax.swing.JPanel pnlDSSP;
     private javax.swing.JPanel pnlGioHang;
     private javax.swing.JPanel pnlThanhVien;
-    private javax.swing.JPanel pnlWebcam;
     private javax.swing.JTable tblDanhSachSp;
     private javax.swing.JTable tblGioHangCho;
     private javax.swing.JTable tblListHoaDon;

@@ -332,7 +332,7 @@ public class SignIn_Dialog extends javax.swing.JDialog {
     }//GEN-LAST:event_lblBtnLoginMouseClicked
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
- 
+        
         this.dispose();
         System.out.println("Clicked SignUp");
     }//GEN-LAST:event_lblSignUpMouseClicked
