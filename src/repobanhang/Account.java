@@ -1,4 +1,4 @@
-package Repository;
+package repobanhang;
 
 import Entity.NhanVien;
 import java.sql.Connection;

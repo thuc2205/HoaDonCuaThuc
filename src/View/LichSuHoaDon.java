@@ -2,7 +2,7 @@
 package View;
 
 import Entity.HoaDon;
-import Repository.HoaDnRepo;
+import repobanhang.HoaDnRepo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;

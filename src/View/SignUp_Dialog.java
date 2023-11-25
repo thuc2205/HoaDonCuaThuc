@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import Repository.Account;
-import Repository.JOPane;
-import Repository.Validate;
+import repobanhang.Account;
+import repobanhang.JOPane;
+import repobanhang.Validate;
 
 public final class SignUp_Dialog extends javax.swing.JDialog {
 

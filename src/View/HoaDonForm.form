@@ -657,44 +657,39 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="txtTienKhachDua" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                              <Component id="lblErrTienKhachDua" min="-2" pref="141" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="btnThanhToan" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="btnHuy" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                              <Component id="btnVaoDatHang" min="-2" pref="93" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lblMaHoaDon" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblNhanVien" alignment="0" pref="92" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblErrKiemTraDiem" min="-2" pref="189" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="txtTienKhachDua" min="-2" pref="93" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                                      <Component id="lblErrTienKhachDua" min="-2" pref="141" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="btnThanhToan" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                      <Component id="btnHuy" linkSize="3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                      <Component id="btnVaoDatHang" min="-2" pref="93" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="lblMaHoaDon" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="lblNhanVien" alignment="0" pref="92" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="lblKiemTraDiem" max="32767" attributes="0"/>
-                                          <Component id="lblTongTien" pref="93" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                                      <Component id="btnTra" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnSuDungDien" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblTienThua" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                                  <Component id="cboHinhThucTT" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lblKiemTraDiem" max="32767" attributes="0"/>
+                                  <Component id="lblTongTien" pref="93" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Component id="btnTra" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnSuDungDien" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="lblTienThua" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="cboHinhThucTT" min="-2" pref="93" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -731,7 +726,10 @@
                                   <Group type="102" attributes="0">
                                       <Component id="lblNhanVien" min="-2" pref="31" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Component id="lblMaHoaDon" min="-2" pref="30" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="lblMaHoaDon" min="-2" pref="30" max="-2" attributes="0"/>
+                                          <Component id="lblErrKiemTraDiem" min="-2" pref="18" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblKiemTraDiem" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
@@ -739,10 +737,7 @@
                                           <Component id="btnSuDungDien" linkSize="2" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lblErrKiemTraDiem" min="-2" pref="18" max="-2" attributes="0"/>
-                                          <Component id="lblTongTien" min="-2" pref="30" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="lblTongTien" min="-2" pref="30" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txtTienKhachDua" alignment="0" min="-2" pref="33" max="-2" attributes="0"/>

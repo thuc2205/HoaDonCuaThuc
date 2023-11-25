@@ -1,4 +1,4 @@
-package Repository;
+package repobanhang;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;

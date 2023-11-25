@@ -5,7 +5,7 @@
 package View;
 
 import Entity.KhachHang;
-import Repository.KhachHangRepo;
+import repobanhang.KhachHangRepo;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

@@ -4,10 +4,10 @@ import Entity.GiayChiTiet;
 import Entity.HoaDon;
 import Entity.HoaDonChiTiet;
 import Entity.KhachHang;
-import Repository.GiayChiTietRepo;
-import Repository.HoaDnRepo;
-import Repository.HoaDonChiTietRepo;
-import Repository.KhachHangRepo;
+import repobanhang.GiayChiTietRepo;
+import repobanhang.HoaDnRepo;
+import repobanhang.HoaDonChiTietRepo;
+import repobanhang.KhachHangRepo;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
@@ -38,7 +38,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
+public final class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFactory {
 
     CardLayout card;
 
@@ -59,11 +59,8 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
     DefaultTableModel modelListGioHang;
     DefaultTableModel modelListHoaDon;
 
-    /**
-     * Creates new form HoaDonForm
-     */
+    
     public HoaDonForm() {
-
         initComponents();
         initWebcam();
         card = (CardLayout) pnlBanHang.getLayout();
@@ -84,7 +81,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         showDataSanPham();
         showDaTAHoaDon();
         comBoMaGiay();
-
+        
     }
 
     private void initWebcam() {
@@ -95,7 +92,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         panel = new WebcamPanel(webcam);
         panel.setPreferredSize(size);
         panel.setFPSDisplayed(true);
-
+        
         jpnQR.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 223, 201));
 
         executor.execute(this);
@@ -222,7 +219,9 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         listGiayChiTiet = gct.getAllGiay();
         String comboMaGiay = (String) cboMa.getSelectedItem();
         for (GiayChiTiet g : listGiayChiTiet) {
-            if (comboMaGiay.equalsIgnoreCase(g.getGiay().getMa())) {
+            if (comboMaGiay.equalsIgnoreCase("Tất cả mã giày")) {
+                showDataSanPham();
+            } else if (comboMaGiay.equalsIgnoreCase(g.getGiay().getMa())) {
                 Vector<Object> v = new Vector<>();
                 v.add(g.getGiay().getMa());
                 v.add(g.getGiay().getName());
@@ -282,24 +281,30 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
 
     private void showDataGoHang(String id) {
         try {
+//            int row =tblGioHangCho.getSelectedRow() ;
+//            int tongT = Integer.parseInt(tblGioHangCho.getValueAt(row, 5).toString());
             listHoaDonChiTiet = hdctrepo.getAllHoaDonChiTietByHoaDonID(id);
 
             modelListGioHang.setRowCount(0);
+            if (modelListGioHang.getRowCount() < 0) {
+                lblTongTien.setText("0");
+            } else {
+                for (HoaDonChiTiet h : listHoaDonChiTiet) {
+                    String g = h.getiDhoaDon();
+                    // Kiểm tra xem chi tiết hoá đơn có thuộc vào ID hoá đơn cần tìm hay không
+                    if (g.equals(id)) {
+                        modelListGioHang.addRow(new Object[]{
+                            modelListGioHang.getRowCount() + 1,
+                            h.getGiayChiTiet().getGiay().getMa(),
+                            h.getGiayChiTiet().getGiay().getName(),
+                            h.getSoLuong(),
+                            h.getGia(),
+                            h.tongTien()
+                        });
 
-            for (HoaDonChiTiet h : listHoaDonChiTiet) {
-                String g = h.getiDhoaDon();
-                // Kiểm tra xem chi tiết hoá đơn có thuộc vào ID hoá đơn cần tìm hay không
-                if (g.equals(id)) {
-                    modelListGioHang.addRow(new Object[]{
-                        modelListGioHang.getRowCount() + 1,
-                        h.getGiayChiTiet().getGiay().getMa(),
-                        h.getGiayChiTiet().getGiay().getName(),
-                        h.getSoLuong(),
-                        h.getGia(),
-                        h.tongTien()
-                    });
-
+                    }
                 }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonForm.class
@@ -372,7 +377,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         lblMaHoaDon.setText(null);
         txtTienKhachDua.setText("0");
         lblTongTien.setText("0");
-        lblErrKiemTraDiem.setText("0");
+        lblErrKiemTraDiem.setText(null);
         lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
         modelListGioHang.setRowCount(0);
         lblTienThua.setText("0");
@@ -913,35 +918,32 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                 .addGap(18, 18, 18)
                 .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CardMuaHangLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89)
+                        .addComponent(lblErrTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(CardMuaHangLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnHuy)
+                        .addGap(53, 53, 53)
+                        .addComponent(btnVaoDatHang, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CardMuaHangLayout.createSequentialGroup()
+                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNhanVien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblErrKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(CardMuaHangLayout.createSequentialGroup()
-                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(89, 89, 89)
-                                .addComponent(lblErrTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(btnHuy)
-                                .addGap(53, 53, 53)
-                                .addComponent(btnVaoDatHang, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblMaHoaDon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblNhanVien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
-                            .addGroup(CardMuaHangLayout.createSequentialGroup()
-                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblKiemTraDiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
-                                .addGap(11, 11, 11)
-                                .addComponent(btnTra)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSuDungDien))
-                            .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblKiemTraDiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
+                        .addGap(11, 11, 11)
+                        .addComponent(btnTra)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSuDungDien))
+                    .addComponent(lblTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboHinhThucTT, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CardMuaHangLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnHoaDon, btnHuy});
@@ -977,16 +979,16 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                             .addGroup(CardMuaHangLayout.createSequentialGroup()
                                 .addComponent(lblNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(lblMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblErrKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10)
                                 .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnTra)
                                     .addComponent(btnSuDungDien, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(10, 10, 10)
-                                .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblErrKiemTraDiem, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addGroup(CardMuaHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1250,6 +1252,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                         lblTongTien1.setText("0");
                         txtTienKhachDua.setText("0");
                         lblError.setText(null);
+
                         showDataGoHang(idHoaDon);
                         selectmaHoaDon();
                         JOptionPane.showMessageDialog(this, "Tạo Hóa Đơn Thành Công");
@@ -1271,6 +1274,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
             BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
             String trangThai = "Đã thanh toán";
             String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
+            
             listKhachHang = khrp.getKhachHang();
             for (KhachHang k : listKhachHang) {
                 if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
@@ -1291,7 +1295,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblListHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListHoaDonMouseClicked
-          
+
         int selectedRow = tblListHoaDon.getSelectedRow();
         lblError.setText(null);
         if (selectedRow != -1) {
@@ -1301,16 +1305,32 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                 listHoaDon = hdrepo.getAllHoaDon();
                 HoaDon h = listHoaDon.get(selectedRow);
 
-                String idHoaDon = h.getId().toString();
+                String idHoaDon = h.getId();
 
                 showDataGoHang(idHoaDon);
-                BigDecimal tongtien = tinhVaThemTongTien(5);
-                lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
-                lblError.setText(null);
+                BigDecimal tongTien = BigDecimal.ZERO;
+                int rowCount = tblGioHangCho.getRowCount();
+                if (rowCount < 0) {
+                    lblTongTien.setText("0");
+                } else {
+                    for (int i = 0; i < rowCount; i++) {
+                        String tongTienGio = tblGioHangCho.getValueAt(i, 5).toString();
+
+                        BigDecimal giaTien = new BigDecimal(tongTienGio);
+
+                        tongTien = tongTien.add(giaTien);
+                        lblTongTien.setText(tongTien.toString());
+                        lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+                        lblError.setText(null);
+                    }
+
+                }
             } else {
                 lblTongTien.setText("0");
             }
-
+            if(!lblMaHoaDon.getText().isEmpty()){
+                lblErrKiemTraDiem.setText(null);
+            }
         }
     }//GEN-LAST:event_tblListHoaDonMouseClicked
 
@@ -1386,7 +1406,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
     }//GEN-LAST:event_tblGioHangChoMouseClicked
 
     private void tblGioHangChoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangChoMouseEntered
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_tblGioHangChoMouseEntered
 
     private void cboHinhThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHinhThucTTActionPerformed
@@ -1418,6 +1438,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
         if (ma.isBlank()) {
             JOptionPane.showMessageDialog(this, "Chưa nhập mã khách hàng");
+
         } else {
             BigDecimal Diem = khrp.selectTichDiem(ma);
             if (khrp.selectTichDiem(ma) != null) {
@@ -1468,7 +1489,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                         //Sau khi dùng điểm tiền thừa thay đổi
                         lblTienThua.setText(tienThua.toString());
                     } else {
-                        lblErrKiemTraDiem.setText("không thể sử dụng");
+                        lblErrKiemTraDiem.setText("Không thể sử dụng");
                     }
 
                 } else {
@@ -1496,7 +1517,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
                     //Sau khi dùng điểm tiền thừa thay đổi
                     lblTienThua.setText(tienThua.toString());
                 } else {
-                    lblErrKiemTraDiem.setText("không thể sử dụng");
+                    lblErrKiemTraDiem.setText("Không thể sử dụng");
                 }
 
             } else {
@@ -1592,7 +1613,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
     }//GEN-LAST:event_txtMaKhachKeyReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -1633,6 +1654,7 @@ public class HoaDonForm extends javax.swing.JFrame implements Runnable, ThreadFa
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+              
                 new HoaDonForm().setVisible(true);
             }
         });

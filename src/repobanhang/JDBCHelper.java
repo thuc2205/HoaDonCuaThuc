@@ -1,4 +1,4 @@
-package Repository;
+package repobanhang;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
