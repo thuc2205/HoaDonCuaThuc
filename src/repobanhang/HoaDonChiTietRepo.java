@@ -203,17 +203,5 @@ public class HoaDonChiTietRepo {
         return soLuong;
     }
 
-    public Integer deleteAllHoaDonChiTiet(String idHoaDon) {
-        String sql = "delete from HOADONCHITIET WHERE ID_HOADON = ?";
-
-        try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, idHoaDon);
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
 
 }

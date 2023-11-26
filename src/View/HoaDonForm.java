@@ -22,6 +22,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -381,6 +382,10 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
         modelListGioHang.setRowCount(0);
         lblTienThua.setText("0");
+        lblKiemTraDiem.setText(null);
+        txtMaKhach.setText("");
+        lblKhachHang.setText(null);
+        cboHinhThucTT.setSelectedIndex(0);
     }
 
     private void updateProductQuantity(int i, int quantity) {
@@ -1271,15 +1276,16 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         int check = JOptionPane.showConfirmDialog(this, "Thanh Toán ?");
         if (check == JOptionPane.YES_OPTION) {
             BigDecimal tienKH = new BigDecimal(txtTienKhachDua.getText().trim());
+            System.out.println("Tiền khách đưa:"+tienKH);
             BigDecimal tienThua = new BigDecimal(lblTienThua.getText().trim());
             String trangThai = "Đã thanh toán";
             String maHD = tblListHoaDon.getValueAt(tblListHoaDon.getSelectedRow(), 1).toString();
-            
+            BigDecimal tongT = new BigDecimal(lblTongTien.getText().trim());
             listKhachHang = khrp.getKhachHang();
             for (KhachHang k : listKhachHang) {
                 if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
                     String idKH = k.getId();
-                    int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), maHD, idKH);
+                    int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(),idKH ,tongT,maHD );
                     if (ok == 0) {
                         showDaTAHoaDon();
                         resetThanhToan();
@@ -1424,7 +1430,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         if (check == JOptionPane.YES_OPTION) {
             int indexHoaDon = tblListHoaDon.getSelectedRow();
             HoaDon hoaDon = listHoaDon.get(indexHoaDon);
-            if (hdctrepo.deleteAllHoaDonChiTiet(hoaDon.getId()) != null) {
+            if (hdrepo.deleteAllHoaDonChiTiet(hoaDon.getId()) != null) {
                 showDataSanPham();
                 showDataGoHang(hoaDon.getId());
             }
