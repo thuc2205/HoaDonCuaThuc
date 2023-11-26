@@ -20,11 +20,15 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         listHoaDon = hdrepo.getAllHoaDon();
         modelLichSuHoaDon = (DefaultTableModel) tblLichSuHoaDon.getModel();
         modelLichSuMuaHang = (DefaultTableModel) tblLichSuDatHang.getModel();
+        setActionListener();
+        showAllDataHD();
+        showDaTAHoaDon();
+    }
+
+    private void setActionListener() {
         rdoHuy.addActionListener(e -> showDaTAHoaDon());
         rdoDaThanhToan.addActionListener(e -> showDaTAHoaDon());
         chkShowAll.addActionListener(e -> showAllDataHD());
-        showAllDataHD();
-        showDaTAHoaDon();
     }
 
     private void showDaTAHoaDon() {
@@ -61,7 +65,7 @@ public class LichSuHoaDon extends javax.swing.JFrame {
                     || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Chờ Thanh Toán"))) {
                 fillTable(h);
                 buttonGroup1.clearSelection();
-            } 
+            }
         }
         modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Mã HĐ", "Mã NV", "Mã KH", "Ngày tạo", "Tổng tiền", "Tiền khách đưa", "Tiền thừa", "Thanh Toán", "Trạng thái"});
     }
