@@ -24,25 +24,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="pnlGioHang" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlGioHang" max="32767" attributes="0"/>
                   <Component id="pnlDSSP" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="pnlDSHD" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jpnQR" min="-2" pref="223" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator3" min="-2" pref="2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="pnlBanHang" pref="445" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="pnlThanhVien" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="pnlThanhVien" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="pnlBanHang" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -50,31 +49,25 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="1" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlDSHD" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jpnQR" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnlGioHang" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pnlDSSP" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="pnlThanhVien" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="pnlBanHang" min="-2" pref="469" max="-2" attributes="0"/>
-                  </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jpnQR" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pnlDSHD" alignment="0" max="32767" attributes="0"/>
+                  <Component id="pnlThanhVien" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="pnlGioHang" min="-2" pref="218" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="pnlDSSP" min="-2" pref="222" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="pnlBanHang" pref="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
-          <Component id="jSeparator3" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -95,10 +88,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="cboMa" min="-2" pref="304" max="-2" attributes="0"/>
-                      <Component id="lblError" alignment="0" min="-2" pref="320" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="cboMa" min="-2" pref="304" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblError" min="-2" pref="320" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
@@ -108,12 +100,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="cboMa" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="cboMa" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblError" min="-2" pref="21" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="149" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblError" min="-2" pref="21" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -207,14 +200,14 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" min="-2" pref="148" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnDeleteAll" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" min="-2" pref="148" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnDeleteAll" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDelete" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -303,7 +296,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane2" alignment="0" pref="179" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -378,7 +371,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="265" max="32767" attributes="0"/>
+                                      <EmptySpace pref="249" max="32767" attributes="0"/>
                                       <Component id="btnTroVeBanHang" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jButton4" max="32767" attributes="0"/>
@@ -638,7 +631,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="btnHoaDon" linkSize="3" min="-2" max="-2" attributes="0"/>
@@ -656,40 +649,42 @@
                       <Component id="jSeparator1" min="-2" pref="3" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="txtTienKhachDua" min="-2" pref="93" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                              <Component id="lblErrTienKhachDua" min="-2" pref="141" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="txtTienKhachDua" min="-2" pref="93" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="lblErrTienKhachDua" min="-2" pref="170" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="btnThanhToan" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="lblMaHoaDon" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblNhanVien" alignment="0" pref="92" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lblKiemTraDiem" max="32767" attributes="0"/>
+                                          <Component id="lblTongTien" pref="93" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                                      <Component id="btnTra" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnSuDungDien" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblTienThua" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <Component id="cboHinhThucTT" min="-2" pref="93" max="-2" attributes="0"/>
+                                  <Component id="lblErrKiemTraDiem" alignment="0" min="-2" pref="258" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Component id="btnThanhToan" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Component id="btnHuy" linkSize="3" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnVaoDatHang" min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblMaHoaDon" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblNhanVien" alignment="0" pref="92" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblErrKiemTraDiem" min="-2" pref="189" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lblKiemTraDiem" max="32767" attributes="0"/>
-                                  <Component id="lblTongTien" pref="93" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                              <Component id="btnTra" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnSuDungDien" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lblTienThua" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                          <Component id="cboHinhThucTT" min="-2" pref="93" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -726,10 +721,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="lblNhanVien" min="-2" pref="31" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="lblMaHoaDon" min="-2" pref="30" max="-2" attributes="0"/>
-                                          <Component id="lblErrKiemTraDiem" min="-2" pref="18" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="lblMaHoaDon" min="-2" pref="30" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="lblKiemTraDiem" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
@@ -750,9 +742,11 @@
                                   </Group>
                                   <Component id="jSeparator1" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblErrKiemTraDiem" min="-2" pref="18" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btnThanhToan" min="-2" pref="57" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -887,9 +881,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTienKhachDua">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="0"/>
-              </Properties>
               <Events>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTienKhachDuaKeyReleased"/>
               </Events>
@@ -989,7 +980,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
             <TitledBorder title="Th&#xe0;nh vi&#xea;n">
-              <Font PropertyName="font" name="Times New Roman" size="14" style="1"/>
+              <Font PropertyName="font" name="Times New Roman" size="18" style="1"/>
             </TitledBorder>
           </Border>
         </Property>
@@ -998,17 +989,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="lblErrKhach" max="32767" attributes="0"/>
-                          <Component id="lblKhachHang" alignment="1" pref="241" max="32767" attributes="0"/>
+                      <Component id="lblErrKhach" alignment="0" min="-2" pref="241" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtMaKhach" pref="241" max="32767" attributes="0"/>
+                              <Component id="lblKhachHang" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="txtMaKhach" alignment="0" min="-2" pref="241" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -1016,16 +1009,21 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="txtMaKhach" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButton3" pref="40" max="32767" attributes="0"/>
-                      <Component id="lblKhachHang" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtMaKhach" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblKhachHang" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButton3" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblErrKhach" min="-2" pref="18" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -1082,13 +1080,22 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JSeparator" name="jSeparator3">
-    </Component>
     <Container class="javax.swing.JPanel" name="jpnQR">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+            <TitledBorder title="QR Camera">
+              <Font PropertyName="font" name="Times New Roman" size="18" style="1"/>
+            </TitledBorder>
+          </Border>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="false"/>
       </Layout>
     </Container>
+    <Component class="javax.swing.JSeparator" name="jSeparator3">
+    </Component>
   </SubComponents>
 </Form>
