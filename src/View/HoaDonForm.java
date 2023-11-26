@@ -513,7 +513,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
 
         btnDelete.setBackground(new java.awt.Color(0, 0, 0));
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
-        btnDelete.setText("Bỏ Sản Phẩm");
+        btnDelete.setText("Bỏ sản phẩm");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -538,15 +538,12 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblGioHangChoMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                tblGioHangChoMouseEntered(evt);
-            }
         });
         jScrollPane3.setViewportView(tblGioHangCho);
 
         btnDeleteAll.setBackground(new java.awt.Color(0, 0, 0));
         btnDeleteAll.setForeground(new java.awt.Color(255, 255, 255));
-        btnDeleteAll.setText("Bỏ Hết Sản Phẩm");
+        btnDeleteAll.setText("Bỏ tất cả sản phẩm");
         btnDeleteAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteAllActionPerformed(evt);
@@ -778,7 +775,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         CardMuaHang.setName("Tạo Hoá Đơn"); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel2.setText("Mã Hoá Đơn");
+        jLabel2.setText("Mã hóa đơn");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel5.setText("Nhân Viên");
@@ -794,13 +791,13 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         });
 
         jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel9.setText("Tiền Khách Đưa");
+        jLabel9.setText("Tiền khách đưa");
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel10.setText("Tiền Thừa");
+        jLabel10.setText("Tiền thừa");
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel12.setText("Hình Thức TT");
+        jLabel12.setText("Hình thức TT");
 
         btnHuy.setBackground(new java.awt.Color(0, 0, 0));
         btnHuy.setForeground(new java.awt.Color(255, 255, 255));
@@ -821,16 +818,11 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         });
 
         cboHinhThucTT.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền Mặt", "Thẻ " }));
-        cboHinhThucTT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboHinhThucTTActionPerformed(evt);
-            }
-        });
 
         lblMaHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
 
         lblNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        lblNhanVien.setText("Chưa Làm Rùi");
+        lblNhanVien.setText("Null");
 
         lblTongTien.setText("0");
 
@@ -843,7 +835,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         });
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel18.setText("Kiểm Tra Điểm");
+        jLabel18.setText("Điểm tích lũy");
 
         lblKiemTraDiem.setText("0");
 
@@ -1260,7 +1252,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         if (!lblMaHoaDon.getText().trim().isEmpty()) {
-            
+
             int check = JOptionPane.showConfirmDialog(this, "Thanh Toán ?");
             if (check == JOptionPane.YES_OPTION) {
                 BigDecimal tienKH = new BigDecimal(txtTienKhachDua.getText().trim());
@@ -1273,8 +1265,8 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
                 for (KhachHang k : listKhachHang) {
                     if (k.getMa().equalsIgnoreCase(txtMaKhach.getText().trim())) {
                         String idKH = k.getId();
-                        BigDecimal diem = new BigDecimal(lblKiemTraDiem.getText().trim());
-                        tdrp.tichDiem(diem, idKH);
+                        BigDecimal diemTTXong = (new BigDecimal(lblKiemTraDiem.getText().trim()).add(new BigDecimal(10000)));
+                        tdrp.tichDiem(diemTTXong, k.getId());
                         int ok = hdrepo.updateHDByMa(trangThai, tienKH, tienThua, cboHinhThucTT.getSelectedItem().toString(), idKH, tongT, maHD);
                         if (ok == 0) {
                             showDaTAHoaDon();
@@ -1402,17 +1394,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
                     }
             }
         }
-
-
     }//GEN-LAST:event_tblGioHangChoMouseClicked
-
-    private void tblGioHangChoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangChoMouseEntered
-
-    }//GEN-LAST:event_tblGioHangChoMouseEntered
-
-    private void cboHinhThucTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboHinhThucTTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboHinhThucTTActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         DangKyThanhVienForm t = new DangKyThanhVienForm();
@@ -1455,71 +1437,22 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
     }//GEN-LAST:event_btnTraActionPerformed
 
     private void btnSuDungDienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuDungDienMouseClicked
-
         String ma = txtMaKhach.getText().trim();
-        if (ma.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Chưa nhập mã khách hàng");
-        } else {
-//2 lần click hủy dùng điểm
-            if (evt.getClickCount() == 2) {
-                int check = JOptionPane.showConfirmDialog(this, "Hủy Sử Dụng Điểm");
-                if (check == JOptionPane.YES_OPTION) {
-                    lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+        BigDecimal diem = new BigDecimal(lblKiemTraDiem.getText().trim());
+        BigDecimal result = tinhVaThemTongTien(5).subtract(diem);
+        BigDecimal diemConlai = diem.subtract(diem);
 
-                    BigDecimal tongTien = new BigDecimal(lblTongTien.getText().trim());
-                    BigDecimal dungDien = new BigDecimal(lblKiemTraDiem.getText().trim());
+        // Kiểm tra hủy sử dụng điểm
+        if (evt.getClickCount() == 2) {
+            huySuDungDiem(ma, diem, result);
+            return;
+        }
 
-                    BigDecimal tongTienHuy = tongTien.add(dungDien);
-                    lblTongTien.setText(tongTienHuy.toString());
-
-                    BigDecimal tienKhachDua = new BigDecimal(txtTienKhachDua.getText().trim());
-                    if (tienKhachDua != null && !tienKhachDua.equals(BigDecimal.ZERO)) {
-                        lblTienThua.setText(tienKhachDua.subtract(tongTienHuy).toString());
-                    }
-                }
-            }
-
-            // 1 lần click dùng điểm
+        // Kiểm tra sử dụng điểm
+        if (evt.getClickCount() == 1) {
+            suDungDiem(ma, diem, result, diemConlai);
         }
     }//GEN-LAST:event_btnSuDungDienMouseClicked
-
-    private void btnSuDungDienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuDungDienActionPerformed
-        String ma = txtMaKhach.getText().trim();
-        if (!lblMaHoaDon.getText().isEmpty()) {
-            if (ma.isBlank()) {
-                JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng");
-            } else {
-                try {
-                    BigDecimal tongTien = new BigDecimal(lblTongTien.getText().trim());
-                    BigDecimal tienKhachDua = new BigDecimal(txtTienKhachDua.getText().trim());
-                    if (!tongTien.equals(BigDecimal.ZERO) || !lblTongTien.getText().isEmpty() || lblTongTien != null
-                            || !tienKhachDua.equals(BigDecimal.ZERO) || !txtTienKhachDua.getText().isEmpty() || tienKhachDua != null) {
-                        if (tienKhachDua.compareTo(BigDecimal.ZERO) == 0 || tienKhachDua.compareTo(BigDecimal.ZERO) == -1) {
-                            lblTienThua.setText("0");
-                            lblErrKiemTraDiem.setText("Vui lòng nhập tiền khách đưa !");
-                        } else {
-                            BigDecimal diem = new BigDecimal(lblKiemTraDiem.getText().trim());
-                            BigDecimal result = tinhVaThemTongTien(5).subtract(diem);
-                            BigDecimal diemConlai = diem.subtract(diem);
-                            lblTongTien.setText(result.toString());
-                            BigDecimal tienThua = tienKhachDua.subtract(result);
-                            lblTienThua.setText(tienThua.toString());
-                            lblKiemTraDiem.setForeground(java.awt.Color.RED);
-                            lblKiemTraDiem.setText(diemConlai.toString());
-                        }
-                    } else {
-                        lblErrKiemTraDiem.setText("Không thể sử dụng");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Error:" + e.getMessage());
-                    JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong giỏ!");
-                }
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Chưa tạo hóa đơn!");
-        }
-    }//GEN-LAST:event_btnSuDungDienActionPerformed
 
     private void btnHuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHuyMouseClicked
         int i = tblListHoaDon.getSelectedRow();
@@ -1614,6 +1547,10 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnSuDungDienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuDungDienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSuDungDienActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1721,4 +1658,54 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
     private javax.swing.JTextField txtMaKhach;
     private javax.swing.JTextField txtTienKhachDua;
     // End of variables declaration//GEN-END:variables
+private void huySuDungDiem(String ma, BigDecimal diem, BigDecimal result) {
+        int check = JOptionPane.showConfirmDialog(this, "Hủy Sử Dụng Điểm");
+        if (check == JOptionPane.YES_OPTION) {
+            BigDecimal diemHuy = tdrp.selectDiem(ma);
+            lblKiemTraDiem.setForeground(java.awt.Color.BLACK);
+            lblKiemTraDiem.setText(String.valueOf(diemHuy));
+            BigDecimal tongTien = result;
+            BigDecimal tongTienHuy = tongTien.add(diem);
+            lblTongTien.setText(String.valueOf(tongTienHuy));
+            BigDecimal tienKhachDua = new BigDecimal(txtTienKhachDua.getText().trim());
+
+            if (!tienKhachDua.equals(BigDecimal.ZERO)) {
+                lblTienThua.setText(String.valueOf(tienKhachDua.subtract(tongTienHuy)));
+            }
+
+            // Cộng lại số điểm vào bảng TICHDIEN
+            tdrp.tichDiem(diemHuy, ma);
+        }
+    }
+
+    private void suDungDiem(String ma, BigDecimal diem, BigDecimal result, BigDecimal diemConlai) {
+        String tongTienText = lblTongTien.getText().trim();
+        String tienKhachDuaText = txtTienKhachDua.getText().trim();
+
+        if (!lblMaHoaDon.getText().isEmpty()) {
+            if (ma.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng");
+            } else {
+                try {
+                    BigDecimal tongTien = new BigDecimal(tongTienText);
+                    BigDecimal tienKhachDua = new BigDecimal(tienKhachDuaText);
+
+                    if (tongTien.compareTo(BigDecimal.ZERO) != 0 && tienKhachDua.compareTo(BigDecimal.ZERO) > 0) {
+                        
+                        lblTongTien.setText(String.valueOf(result));
+                        lblTienThua.setText(String.valueOf(tienKhachDua.subtract(result)));
+                        lblKiemTraDiem.setForeground(java.awt.Color.RED);
+                        lblKiemTraDiem.setText(String.valueOf(diemConlai));
+                    } else {
+                        lblErrKiemTraDiem.setText("Không thể sử dụng");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: " + e.getMessage());
+                    JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền hợp lệ!");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Chưa tạo hóa đơn!");
+        }
+    }
 }

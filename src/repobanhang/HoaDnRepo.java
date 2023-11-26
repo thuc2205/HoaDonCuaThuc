@@ -133,7 +133,7 @@ public class HoaDnRepo {
         return null;
     }
 
-    public Integer updateHDByMa(String tt, BigDecimal tienKH, BigDecimal tienThua, String hinhThuc, String KH,BigDecimal tongT, String maHD) {
+    public Integer updateHDByMa(String tt, BigDecimal tienKH, BigDecimal tienThua, String hinhThuc, String KH, BigDecimal tongT, String maHD) {
         String sql = "update HOADON set TRANGTHAI = ?,TIENKHACHDUA=?,TIENTHUA=?,HINHTHUCTHANHTOAN=?,ID_KHACHHANG=?,TONGTIEN=?  where MA=?";
         try (Connection con = DbConText.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setObject(1, tt);
@@ -142,9 +142,9 @@ public class HoaDnRepo {
             ps.setObject(4, hinhThuc);
             ps.setObject(5, KH);
             ps.setObject(6, tongT);
-            ps.setObject(7,maHD );
-            ps.executeUpdate();
-            return 0;
+            ps.setObject(7, maHD);
+            return ps.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Lỗi UPDATE HÓA ĐƠN " + e.getMessage());
@@ -212,7 +212,6 @@ public class HoaDnRepo {
         return trangThaiList;
     }
 
-      
     public Integer deleteAllHoaDonChiTiet(String idHoaDon) {
         String sql = "{CALL HuyTatCaHoaDonChiTiet(?)}";
 
