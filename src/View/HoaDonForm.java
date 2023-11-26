@@ -22,7 +22,6 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
 
     private Webcam webcam = null;
     private WebcamPanel panel = null;
-    private Executor executor = Executors.newSingleThreadExecutor(this);
+    private final Executor executor = Executors.newSingleThreadExecutor(this);
     HoaDonChiTietRepo hdctrepo = new HoaDonChiTietRepo();
     GiayChiTietRepo gct = new GiayChiTietRepo();
     HoaDnRepo hdrepo = new HoaDnRepo();
@@ -125,10 +124,10 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
 
             if (result != null) {
                 int indexDanhSachSp = 0;
-                for (GiayChiTiet gct : listGiayChiTiet) {
+                for (GiayChiTiet giayChiTiet : listGiayChiTiet) {
 
-                    if (gct.getiD().equals(result.toString())) {
-                        indexDanhSachSp = listGiayChiTiet.indexOf(gct);
+                    if (giayChiTiet.getiD().equals(result.toString())) {
+                        indexDanhSachSp = listGiayChiTiet.indexOf(giayChiTiet);
                     }
                 }
                 int check = JOptionPane.showConfirmDialog(this, "Bỏ Vào Giỏ ! Mua");
@@ -174,8 +173,6 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
 
                                                 }
                                                 showDataGoHang(idHoaDonz);
-                                                BigDecimal tongtien = tinhVaThemTongTien(5);
-
                                             }
 
                                         }
@@ -362,17 +359,6 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
         modelListHoaDon.setColumnIdentifiers(new String[]{"STT", "Mã hóa đơn ", "Ngày tạo", "Mã NV", "Trạng thái"});
     }
 
-    private void updateProductQuantityGoHang(int i, int quantity) {
-        System.out.println("i: " + i);
-        System.out.println("listGiayChiTiet size: " + listGiayChiTiet.size());
-        Object q = modelListGioHang.getValueAt(i, 3);
-        if (i >= 0 && i < listGiayChiTiet.size()) {
-            int quantityInRow = Integer.parseInt(q.toString());
-            int updatedQuantity = quantityInRow + quantity;
-            gct.UpdateSo(listHoaDonChiTiet.get(i).getGiayChiTiet().getiD(), updatedQuantity);
-        }
-
-    }
 
     void resetThanhToan() {
         lblMaHoaDon.setText(null);
@@ -1316,7 +1302,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
                 showDataGoHang(idHoaDon);
                 BigDecimal tongTien = BigDecimal.ZERO;
                 int rowCount = tblGioHangCho.getRowCount();
-                if (rowCount < 0) {
+                if (rowCount <= 0) {
                     lblTongTien.setText("0");
                 } else {
                     for (int i = 0; i < rowCount; i++) {
@@ -1521,7 +1507,9 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
                     BigDecimal result = tinhVaThemTongTien(5).subtract(dungDien);
                     lblTongTien.setText(result.toString());
                     //Sau khi dùng điểm tiền thừa thay đổi
-                    lblTienThua.setText(tienThua.toString());
+                  
+                        lblTienThua.setText(tienThua.toString());
+                    
                 } else {
                     lblErrKiemTraDiem.setText("Không thể sử dụng");
                 }
@@ -1570,7 +1558,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
             BigDecimal tienKhachDuaDecimal = new BigDecimal(tienKhachDua);
 
             BigDecimal tongTien = new BigDecimal(lblTongTien.getText().trim());
-            if (!tienKhachDua.equalsIgnoreCase("0") || !tongTien.equals("0")) {
+            if (!tienKhachDua.equalsIgnoreCase("0") || !tongTien.equals("0") || !tongTien.equals(null)) {
 
                 if (tienKhachDuaDecimal.compareTo(tongTien) == 1 || tienKhachDuaDecimal.compareTo(tongTien) == 0) {
                     BigDecimal tienthua = tienKhachDuaDecimal.subtract(tongTien);
@@ -1580,7 +1568,7 @@ public final class HoaDonForm extends javax.swing.JFrame implements Runnable, Th
                     lblErrTienKhachDua.setText("Chưa Đủ Tiền");
                     lblTienThua.setText("0");
                 }
-            }
+            } 
         } catch (NumberFormatException e) {
             lblErrTienKhachDua.setText("Tiền Phải Là Số");
             lblTienThua.setText("0");

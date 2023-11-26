@@ -41,10 +41,8 @@ public class LichSuHoaDon extends javax.swing.JFrame {
 
             if (rdoHuy.isSelected() && trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Huỷ")) {
                 fillTable(h);
-                chkShowAll.setSelected(false);
             } else if (rdoDaThanhToan.isSelected() && trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Đã Thanh Toán")) {
                 fillTable(h);
-                chkShowAll.setSelected(false);
             }
         }
 
@@ -64,7 +62,6 @@ public class LichSuHoaDon extends javax.swing.JFrame {
                     || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Đã Thanh Toán"))
                     || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Chờ Thanh Toán"))) {
                 fillTable(h);
-                buttonGroup1.clearSelection();
             }
         }
         modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Mã HĐ", "Mã NV", "Mã KH", "Ngày tạo", "Tổng tiền", "Tiền khách đưa", "Tiền thừa", "Thanh Toán", "Trạng thái"});
@@ -161,6 +158,7 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Chọn trạng thái hóa đơn");
 
+        buttonGroup1.add(chkShowAll);
         chkShowAll.setText("Xem tất cả ?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
