@@ -22,7 +22,8 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         modelLichSuMuaHang = (DefaultTableModel) tblLichSuDatHang.getModel();
         rdoHuy.addActionListener(e -> showDaTAHoaDon());
         rdoDaThanhToan.addActionListener(e -> showDaTAHoaDon());
-
+        chkShowAll.addActionListener(e -> showAllDataHD());
+        showAllDataHD();
         showDaTAHoaDon();
     }
 
@@ -36,12 +37,33 @@ public class LichSuHoaDon extends javax.swing.JFrame {
 
             if (rdoHuy.isSelected() && trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Huỷ")) {
                 fillTable(h);
+                chkShowAll.setSelected(false);
             } else if (rdoDaThanhToan.isSelected() && trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Đã Thanh Toán")) {
                 fillTable(h);
+                chkShowAll.setSelected(false);
             }
         }
 
-        modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Mã HĐ", "Mã NV", "Mã KH","Ngày tạo", "Tổng tiền", "Tiền khách đưa", "Tiền thừa","Thanh Toán", "Trạng thái"});
+        modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Mã HĐ", "Mã NV", "Mã KH", "Ngày tạo", "Tổng tiền", "Tiền khách đưa", "Tiền thừa", "Thanh Toán", "Trạng thái"});
+    }
+
+    final void showAllDataHD() {
+
+        modelLichSuHoaDon.setRowCount(0);
+
+        List<String> trangThai = hdrepo.selectAllTrangThaiHoaDon();
+
+        for (HoaDon h : listHoaDon) {
+            String trangThaiHienTai = h.getTrangThai();
+            boolean showAll = chkShowAll.isSelected();
+            if (showAll || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Huỷ"))
+                    || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Đã Thanh Toán"))
+                    || (trangThai.contains(trangThaiHienTai) && trangThaiHienTai.equalsIgnoreCase("Chờ Thanh Toán"))) {
+                fillTable(h);
+                buttonGroup1.clearSelection();
+            } 
+        }
+        modelLichSuHoaDon.setColumnIdentifiers(new String[]{"STT ", "Mã HĐ", "Mã NV", "Mã KH", "Ngày tạo", "Tổng tiền", "Tiền khách đưa", "Tiền thừa", "Thanh Toán", "Trạng thái"});
     }
 
     private void fillTable(HoaDon h) {
@@ -71,12 +93,13 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblLichSuDatHang = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        cboLichSu = new javax.swing.JComboBox<>();
         rdoHuy = new javax.swing.JRadioButton();
         rdoDaThanhToan = new javax.swing.JRadioButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        chkShowAll = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,8 +141,6 @@ public class LichSuHoaDon extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 153, 51));
         jLabel2.setText("LỊCH SỬ HOÁ ĐƠN");
 
-        cboLichSu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         buttonGroup1.add(rdoHuy);
         rdoHuy.setText("Huỷ ");
 
@@ -132,54 +153,63 @@ public class LichSuHoaDon extends javax.swing.JFrame {
 
         jRadioButton4.setText("trang thai 2");
 
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setText("Chọn trạng thái hóa đơn");
+
+        chkShowAll.setText("Xem tất cả ?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 880, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cboLichSu, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(61, 61, 61)
-                            .addComponent(rdoHuy)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(rdoDaThanhToan))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(94, 94, 94)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(18, 18, 18)
-                            .addComponent(jRadioButton3)
-                            .addGap(18, 18, 18)
-                            .addComponent(jRadioButton4))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chkShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoHuy)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoDaThanhToan))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(94, 94, 94)
+                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton4))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdoDaThanhToan)
                             .addComponent(rdoHuy)
-                            .addComponent(cboLichSu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                            .addComponent(chkShowAll)
+                            .addComponent(jLabel3))
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox2)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jRadioButton3)
                         .addComponent(jRadioButton4)))
                 .addGap(18, 18, 18)
@@ -228,10 +258,11 @@ public class LichSuHoaDon extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cboLichSu;
+    private javax.swing.JCheckBox chkShowAll;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
